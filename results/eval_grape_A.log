@@ -1,0 +1,13 @@
+2026-04-10 03:24:35.474762: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-04-10 03:24:35.534459: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-04-10 03:24:36.787742: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+=== Evaluating GRAPE A (100 traj) ===
+  Optimizing GRAPE on scenario A (noiseless)...
+  GRAPE iter    0:  F = 1.000000
+  GRAPE noiseless F = 1.000000
+  Evaluating GRAPE under noise (100 trajectories)...
+  trajectory 1/100  mean_F = 0.5915  (0.1s)
+  trajectory 50/100  mean_F = 0.7390  (5.8s)
+  trajectory 100/100  mean_F = 0.6781  (10.6s)
+GRAPE A: F = 0.6781 +/- 0.2299

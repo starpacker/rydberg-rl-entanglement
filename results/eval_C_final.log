@@ -1,0 +1,32 @@
+2026-04-10 05:42:31.548434: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-04-10 05:42:31.616174: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-04-10 05:42:33.007338: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+=== STIRAP C ===
+  Evaluating STIRAP on scenario C...
+  trajectory 1/200  mean_F = 0.8526  (0.1s)
+  trajectory 50/200  mean_F = 0.8504  (11.2s)
+  trajectory 100/200  mean_F = 0.8535  (24.8s)
+  trajectory 150/200  mean_F = 0.8437  (39.3s)
+  trajectory 200/200  mean_F = 0.8504  (56.7s)
+STIRAP C: F = 0.8504 +/- 0.1512
+
+=== GRAPE C ===
+  Optimizing GRAPE on scenario C (noiseless)...
+  GRAPE iter    0:  F = 0.999999
+  GRAPE noiseless F = 0.999999
+  Evaluating GRAPE under noise (200 trajectories)...
+  trajectory 1/200  mean_F = 0.8295  (0.1s)
+  trajectory 50/200  mean_F = 0.8193  (9.1s)
+  trajectory 100/200  mean_F = 0.8208  (21.5s)
+  trajectory 150/200  mean_F = 0.8089  (34.3s)
+  trajectory 200/200  mean_F = 0.8141  (52.2s)
+GRAPE C: F = 0.8141 +/- 0.1673
+
+=== PPO C ===
+PPO C: F = 0.8141 +/- 0.1903
+
+=== FINAL C COMPARISON ===
+STIRAP: 0.8504
+GRAPE:  0.8141
+PPO:    0.8141

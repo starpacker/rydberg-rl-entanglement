@@ -1,0 +1,112 @@
+2026-04-10 03:36:37.611566: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-04-10 03:36:37.678705: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-04-10 03:36:39.080279: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Loaded ppo_B_best model
+
+=== Evaluating PPO B (200 traj) ===
+PPO B: F = 0.9901 +/- 0.0053
+
+=== Evaluating STIRAP B (200 traj) ===
+  Evaluating STIRAP on scenario B...
+  trajectory 1/200  mean_F = 0.9968  (0.0s)
+  trajectory 50/200  mean_F = 0.9963  (2.4s)
+  trajectory 100/200  mean_F = 0.9961  (4.3s)
+  trajectory 150/200  mean_F = 0.9961  (6.5s)
+  trajectory 200/200  mean_F = 0.9960  (8.5s)
+STIRAP B: F = 0.9960 +/- 0.0020
+
+=== Evaluating GRAPE B (200 traj) ===
+  Optimizing GRAPE on scenario B (noiseless)...
+  GRAPE iter    0:  F = 0.999985
+  GRAPE noiseless F = 0.999985
+  Evaluating GRAPE under noise (200 trajectories)...
+  trajectory 1/200  mean_F = 0.9968  (0.1s)
+  trajectory 50/200  mean_F = 0.9960  (2.5s)
+  trajectory 100/200  mean_F = 0.9958  (5.4s)
+  trajectory 150/200  mean_F = 0.9958  (8.8s)
+  trajectory 200/200  mean_F = 0.9958  (11.9s)
+GRAPE B: F = 0.9958 +/- 0.0022
+
+=== Fig 07: Noise channel sweep ===
+  Noise channel sweep: doppler...
+    doppler: 1-F = 0.001337
+  Noise channel sweep: position...
+    position: 1-F = 0.000010
+  Noise channel sweep: amplitude...
+    amplitude: 1-F = 0.000745
+  Noise channel sweep: phase...
+    phase: 1-F = 0.000009
+  Noise channel sweep: decay...
+    decay: 1-F = 0.001608
+  Noise channel sweep: all...
+    all: 1-F = 0.004033
+
+=== Fig 08: Gate time sweep ===
+
+  T_gate = 0.1 us
+    STIRAP: F = 0.9981
+    GRAPE:  F = 0.9980
+
+  T_gate = 0.2 us
+    STIRAP: F = 0.9971
+    GRAPE:  F = 0.9968
+
+  T_gate = 0.3 us
+    STIRAP: F = 0.9960
+    GRAPE:  F = 0.9959
+
+  T_gate = 0.5 us
+    STIRAP: F = 0.9932
+    GRAPE:  F = 0.9913
+
+  T_gate = 1.0 us
+    STIRAP: F = 0.9806
+    GRAPE:  F = 0.9738
+
+  T_gate = 2.0 us
+    STIRAP: F = 0.9376
+    GRAPE:  F = 0.9124
+
+  T_gate = 5.0 us
+    STIRAP: F = 0.7138
+    GRAPE:  F = 0.6553
+
+=== Fig 11: Robustness sweep ===
+  Optimizing GRAPE pulse for robustness sweep...
+
+  delta_Omega/Omega = 0%
+    STIRAP: F = 0.9961
+    GRAPE:  F = 0.9960
+    PPO:    F = 0.9901
+
+  delta_Omega/Omega = 1%
+    STIRAP: F = 0.9959
+    GRAPE:  F = 0.9953
+    PPO:    F = 0.9898
+
+  delta_Omega/Omega = 2%
+    STIRAP: F = 0.9952
+    GRAPE:  F = 0.9949
+    PPO:    F = 0.9895
+
+  delta_Omega/Omega = 3%
+    STIRAP: F = 0.9938
+    GRAPE:  F = 0.9937
+    PPO:    F = 0.9893
+
+  delta_Omega/Omega = 4%
+    STIRAP: F = 0.9910
+    GRAPE:  F = 0.9912
+    PPO:    F = 0.9891
+
+  delta_Omega/Omega = 5%
+    STIRAP: F = 0.9903
+    GRAPE:  F = 0.9900
+    PPO:    F = 0.9891
+
+=== Fig 13: PPO pulse ===
+
+=== Fig 14: Population evolution ===
+
+All B evaluation complete!

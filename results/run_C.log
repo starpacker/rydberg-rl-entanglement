@@ -1,0 +1,246 @@
+2026-04-10 01:46:22.943972: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-04-10 01:46:23.007010: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-04-10 01:46:24.351274: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+############################################################
+# SCENARIO C: High-noise / RL-advantage regime (3x amplified noise)
+############################################################
+
+============================================================
+Training PPO on Scenario C, seed=42
+============================================================
+  [Step 3000] Ep 100: mean F = 0.4814, max = 0.9520
+  [Step 6000] Ep 200: mean F = 0.4892, max = 0.9924
+  [Step 9000] Ep 300: mean F = 0.4960, max = 0.9619
+  [Step 12000] Ep 400: mean F = 0.5058, max = 0.9810
+  [Step 15000] Ep 500: mean F = 0.5847, max = 0.9779
+  [Step 18000] Ep 600: mean F = 0.5625, max = 0.9805
+  [Step 21000] Ep 700: mean F = 0.5942, max = 0.9698
+  [Step 24000] Ep 800: mean F = 0.6383, max = 0.9826
+  [Step 27000] Ep 900: mean F = 0.6299, max = 0.9753
+  [Step 30000] Ep 1000: mean F = 0.6327, max = 0.9648
+  [Step 33000] Ep 1100: mean F = 0.6077, max = 0.9677
+  [Step 36000] Ep 1200: mean F = 0.6276, max = 0.9740
+  [Step 39000] Ep 1300: mean F = 0.7122, max = 0.9871
+  [Step 42000] Ep 1400: mean F = 0.6867, max = 0.9901
+  [Step 45000] Ep 1500: mean F = 0.7162, max = 0.9896
+  [Step 48000] Ep 1600: mean F = 0.7316, max = 0.9782
+  [Step 51000] Ep 1700: mean F = 0.6728, max = 0.9845
+  [Step 54000] Ep 1800: mean F = 0.6906, max = 0.9764
+  [Step 57000] Ep 1900: mean F = 0.7487, max = 0.9841
+  [Step 60000] Ep 2000: mean F = 0.6965, max = 0.9823
+  [Step 63000] Ep 2100: mean F = 0.7444, max = 0.9840
+  [Step 66000] Ep 2200: mean F = 0.7763, max = 0.9771
+  [Step 69000] Ep 2300: mean F = 0.7387, max = 0.9760
+  [Step 72000] Ep 2400: mean F = 0.7070, max = 0.9833
+  [Step 75000] Ep 2500: mean F = 0.7582, max = 0.9820
+  [Step 78000] Ep 2600: mean F = 0.7671, max = 0.9894
+  [Step 81000] Ep 2700: mean F = 0.7021, max = 0.9846
+  [Step 84000] Ep 2800: mean F = 0.7092, max = 0.9878
+  [Step 87000] Ep 2900: mean F = 0.7138, max = 0.9825
+  [Step 90000] Ep 3000: mean F = 0.7253, max = 0.9803
+  [Step 93000] Ep 3100: mean F = 0.7593, max = 0.9702
+  [Step 96000] Ep 3200: mean F = 0.6920, max = 0.9762
+  [Step 99000] Ep 3300: mean F = 0.7452, max = 0.9761
+  [Step 102000] Ep 3400: mean F = 0.7233, max = 0.9818
+  [Step 105000] Ep 3500: mean F = 0.7829, max = 0.9852
+  [Step 108000] Ep 3600: mean F = 0.7115, max = 0.9749
+  [Step 111000] Ep 3700: mean F = 0.7302, max = 0.9818
+  [Step 114000] Ep 3800: mean F = 0.7376, max = 0.9733
+  [Step 117000] Ep 3900: mean F = 0.7410, max = 0.9736
+  [Step 120000] Ep 4000: mean F = 0.7494, max = 0.9884
+  [Step 123000] Ep 4100: mean F = 0.7412, max = 0.9842
+  [Step 126000] Ep 4200: mean F = 0.7436, max = 0.9841
+  [Step 129000] Ep 4300: mean F = 0.7560, max = 0.9828
+  [Step 132000] Ep 4400: mean F = 0.7561, max = 0.9868
+  [Step 135000] Ep 4500: mean F = 0.7850, max = 0.9813
+  [Step 138000] Ep 4600: mean F = 0.7806, max = 0.9811
+  [Step 141000] Ep 4700: mean F = 0.7522, max = 0.9814
+  [Step 144000] Ep 4800: mean F = 0.7461, max = 0.9862
+  [Step 147000] Ep 4900: mean F = 0.7331, max = 0.9728
+  [Step 150000] Ep 5000: mean F = 0.7795, max = 0.9815
+  [Step 153000] Ep 5100: mean F = 0.7302, max = 0.9767
+  [Step 156000] Ep 5200: mean F = 0.7533, max = 0.9841
+  [Step 159000] Ep 5300: mean F = 0.6914, max = 0.9807
+  [Step 162000] Ep 5400: mean F = 0.7362, max = 0.9880
+  [Step 165000] Ep 5500: mean F = 0.8016, max = 0.9874
+  [Step 168000] Ep 5600: mean F = 0.8090, max = 0.9825
+  [Step 171000] Ep 5700: mean F = 0.7187, max = 0.9693
+  [Step 174000] Ep 5800: mean F = 0.8068, max = 0.9793
+  [Step 177000] Ep 5900: mean F = 0.7631, max = 0.9766
+  [Step 180000] Ep 6000: mean F = 0.7418, max = 0.9835
+  [Step 183000] Ep 6100: mean F = 0.7455, max = 0.9773
+  [Step 186000] Ep 6200: mean F = 0.7575, max = 0.9854
+  [Step 189000] Ep 6300: mean F = 0.7564, max = 0.9858
+  [Step 192000] Ep 6400: mean F = 0.7662, max = 0.9780
+  [Step 195000] Ep 6500: mean F = 0.7655, max = 0.9857
+  [Step 198000] Ep 6600: mean F = 0.7568, max = 0.9823
+  [Step 201000] Ep 6700: mean F = 0.7686, max = 0.9856
+  [Step 204000] Ep 6800: mean F = 0.7238, max = 0.9893
+  [Step 207000] Ep 6900: mean F = 0.7500, max = 0.9843
+  [Step 210000] Ep 7000: mean F = 0.7900, max = 0.9872
+  [Step 213000] Ep 7100: mean F = 0.7626, max = 0.9879
+  [Step 216000] Ep 7200: mean F = 0.7662, max = 0.9812
+  [Step 219000] Ep 7300: mean F = 0.7518, max = 0.9834
+  [Step 222000] Ep 7400: mean F = 0.7874, max = 0.9868
+  [Step 225000] Ep 7500: mean F = 0.7639, max = 0.9801
+  [Step 228000] Ep 7600: mean F = 0.7661, max = 0.9808
+  [Step 231000] Ep 7700: mean F = 0.7670, max = 0.9839
+  [Step 234000] Ep 7800: mean F = 0.7941, max = 0.9898
+  [Step 237000] Ep 7900: mean F = 0.7839, max = 0.9829
+  [Step 240000] Ep 8000: mean F = 0.7714, max = 0.9858
+  [Step 243000] Ep 8100: mean F = 0.7318, max = 0.9810
+  [Step 246000] Ep 8200: mean F = 0.7582, max = 0.9839
+  [Step 249000] Ep 8300: mean F = 0.7934, max = 0.9897
+  [Step 252000] Ep 8400: mean F = 0.7969, max = 0.9895
+  [Step 255000] Ep 8500: mean F = 0.7463, max = 0.9793
+  [Step 258000] Ep 8600: mean F = 0.7720, max = 0.9805
+  [Step 261000] Ep 8700: mean F = 0.7794, max = 0.9823
+  [Step 264000] Ep 8800: mean F = 0.7721, max = 0.9828
+  [Step 267000] Ep 8900: mean F = 0.7590, max = 0.9783
+  [Step 270000] Ep 9000: mean F = 0.7845, max = 0.9825
+  [Step 273000] Ep 9100: mean F = 0.7741, max = 0.9862
+  [Step 276000] Ep 9200: mean F = 0.7713, max = 0.9878
+  [Step 279000] Ep 9300: mean F = 0.8063, max = 0.9809
+  [Step 282000] Ep 9400: mean F = 0.7985, max = 0.9802
+  [Step 285000] Ep 9500: mean F = 0.7406, max = 0.9881
+  [Step 288000] Ep 9600: mean F = 0.7810, max = 0.9884
+  [Step 291000] Ep 9700: mean F = 0.7435, max = 0.9879
+  [Step 294000] Ep 9800: mean F = 0.8017, max = 0.9867
+  [Step 297000] Ep 9900: mean F = 0.7604, max = 0.9821
+  [Step 300000] Ep 10000: mean F = 0.8100, max = 0.9811
+  Seed 42: 5445.5s, final mean F = 0.7704
+
+============================================================
+Training PPO on Scenario C, seed=153
+============================================================
+  [Step 3000] Ep 100: mean F = 0.4884, max = 0.9809
+  [Step 6000] Ep 200: mean F = 0.4882, max = 0.9810
+  [Step 9000] Ep 300: mean F = 0.5574, max = 0.9813
+  [Step 12000] Ep 400: mean F = 0.5412, max = 0.9889
+  [Step 15000] Ep 500: mean F = 0.5826, max = 0.9776
+  [Step 18000] Ep 600: mean F = 0.5250, max = 0.9575
+  [Step 21000] Ep 700: mean F = 0.5976, max = 0.9807
+  [Step 24000] Ep 800: mean F = 0.5611, max = 0.9713
+  [Step 27000] Ep 900: mean F = 0.6632, max = 0.9796
+  [Step 30000] Ep 1000: mean F = 0.6770, max = 0.9842
+  [Step 33000] Ep 1100: mean F = 0.6215, max = 0.9761
+  [Step 36000] Ep 1200: mean F = 0.6761, max = 0.9827
+  [Step 39000] Ep 1300: mean F = 0.6822, max = 0.9825
+  [Step 42000] Ep 1400: mean F = 0.6938, max = 0.9798
+  [Step 45000] Ep 1500: mean F = 0.6983, max = 0.9876
+  [Step 48000] Ep 1600: mean F = 0.7145, max = 0.9908
+  [Step 51000] Ep 1700: mean F = 0.7244, max = 0.9875
+  [Step 54000] Ep 1800: mean F = 0.7100, max = 0.9881
+  [Step 57000] Ep 1900: mean F = 0.7043, max = 0.9790
+  [Step 60000] Ep 2000: mean F = 0.6951, max = 0.9836
+  [Step 63000] Ep 2100: mean F = 0.6873, max = 0.9704
+  [Step 66000] Ep 2200: mean F = 0.6984, max = 0.9836
+  [Step 69000] Ep 2300: mean F = 0.7410, max = 0.9837
+  [Step 72000] Ep 2400: mean F = 0.7304, max = 0.9803
+  [Step 75000] Ep 2500: mean F = 0.7222, max = 0.9769
+  [Step 78000] Ep 2600: mean F = 0.7494, max = 0.9886
+  [Step 81000] Ep 2700: mean F = 0.7638, max = 0.9871
+  [Step 84000] Ep 2800: mean F = 0.7134, max = 0.9822
+  [Step 87000] Ep 2900: mean F = 0.7407, max = 0.9790
+  [Step 90000] Ep 3000: mean F = 0.7288, max = 0.9729
+  [Step 93000] Ep 3100: mean F = 0.7361, max = 0.9809
+  [Step 96000] Ep 3200: mean F = 0.7338, max = 0.9833
+  [Step 99000] Ep 3300: mean F = 0.6891, max = 0.9780
+  [Step 102000] Ep 3400: mean F = 0.7046, max = 0.9800
+  [Step 105000] Ep 3500: mean F = 0.7592, max = 0.9812
+  [Step 108000] Ep 3600: mean F = 0.7802, max = 0.9835
+  [Step 111000] Ep 3700: mean F = 0.7190, max = 0.9870
+  [Step 114000] Ep 3800: mean F = 0.7227, max = 0.9903
+  [Step 117000] Ep 3900: mean F = 0.7742, max = 0.9802
+  [Step 120000] Ep 4000: mean F = 0.7415, max = 0.9755
+  [Step 123000] Ep 4100: mean F = 0.7305, max = 0.9864
+  [Step 126000] Ep 4200: mean F = 0.7838, max = 0.9864
+  [Step 129000] Ep 4300: mean F = 0.7759, max = 0.9894
+  [Step 132000] Ep 4400: mean F = 0.7328, max = 0.9888
+  [Step 135000] Ep 4500: mean F = 0.7575, max = 0.9852
+  [Step 138000] Ep 4600: mean F = 0.7765, max = 0.9821
+  [Step 141000] Ep 4700: mean F = 0.7909, max = 0.9836
+  [Step 144000] Ep 4800: mean F = 0.7909, max = 0.9759
+  [Step 147000] Ep 4900: mean F = 0.7780, max = 0.9839
+  [Step 150000] Ep 5000: mean F = 0.7784, max = 0.9847
+  [Step 153000] Ep 5100: mean F = 0.7491, max = 0.9831
+  [Step 156000] Ep 5200: mean F = 0.7940, max = 0.9884
+  [Step 159000] Ep 5300: mean F = 0.7669, max = 0.9870
+  [Step 162000] Ep 5400: mean F = 0.7676, max = 0.9778
+  [Step 165000] Ep 5500: mean F = 0.7791, max = 0.9854
+  [Step 168000] Ep 5600: mean F = 0.7599, max = 0.9809
+  [Step 171000] Ep 5700: mean F = 0.7724, max = 0.9836
+  [Step 174000] Ep 5800: mean F = 0.7910, max = 0.9835
+  [Step 177000] Ep 5900: mean F = 0.7899, max = 0.9812
+  [Step 180000] Ep 6000: mean F = 0.7558, max = 0.9829
+  [Step 183000] Ep 6100: mean F = 0.7775, max = 0.9814
+  [Step 186000] Ep 6200: mean F = 0.7873, max = 0.9812
+  [Step 189000] Ep 6300: mean F = 0.7899, max = 0.9838
+  [Step 192000] Ep 6400: mean F = 0.7918, max = 0.9804
+  [Step 195000] Ep 6500: mean F = 0.7873, max = 0.9884
+  [Step 198000] Ep 6600: mean F = 0.7605, max = 0.9816
+  [Step 201000] Ep 6700: mean F = 0.7855, max = 0.9797
+  [Step 204000] Ep 6800: mean F = 0.7491, max = 0.9891
+  [Step 207000] Ep 6900: mean F = 0.7576, max = 0.9856
+  [Step 210000] Ep 7000: mean F = 0.7622, max = 0.9752
+  [Step 213000] Ep 7100: mean F = 0.7823, max = 0.9857
+  [Step 216000] Ep 7200: mean F = 0.8114, max = 0.9814
+  [Step 219000] Ep 7300: mean F = 0.7894, max = 0.9875
+  [Step 222000] Ep 7400: mean F = 0.7910, max = 0.9857
+  [Step 225000] Ep 7500: mean F = 0.7864, max = 0.9764
+  [Step 228000] Ep 7600: mean F = 0.8000, max = 0.9890
+  [Step 231000] Ep 7700: mean F = 0.8055, max = 0.9848
+  [Step 234000] Ep 7800: mean F = 0.8043, max = 0.9833
+  [Step 237000] Ep 7900: mean F = 0.7872, max = 0.9820
+  [Step 240000] Ep 8000: mean F = 0.7735, max = 0.9839
+  [Step 243000] Ep 8100: mean F = 0.7744, max = 0.9762
+  [Step 246000] Ep 8200: mean F = 0.8010, max = 0.9847
+  [Step 249000] Ep 8300: mean F = 0.8113, max = 0.9861
+  [Step 252000] Ep 8400: mean F = 0.7896, max = 0.9891
+  [Step 255000] Ep 8500: mean F = 0.7886, max = 0.9841
+  [Step 258000] Ep 8600: mean F = 0.8208, max = 0.9851
+  [Step 261000] Ep 8700: mean F = 0.7883, max = 0.9811
+  [Step 264000] Ep 8800: mean F = 0.8067, max = 0.9838
+  [Step 267000] Ep 8900: mean F = 0.7608, max = 0.9818
+  [Step 270000] Ep 9000: mean F = 0.7839, max = 0.9893
+  [Step 273000] Ep 9100: mean F = 0.7501, max = 0.9873
+  [Step 276000] Ep 9200: mean F = 0.7857, max = 0.9870
+  [Step 279000] Ep 9300: mean F = 0.7684, max = 0.9879
+  [Step 282000] Ep 9400: mean F = 0.7769, max = 0.9841
+  [Step 285000] Ep 9500: mean F = 0.7680, max = 0.9804
+  [Step 288000] Ep 9600: mean F = 0.7786, max = 0.9827
+  [Step 291000] Ep 9700: mean F = 0.7692, max = 0.9795
+  [Step 294000] Ep 9800: mean F = 0.7804, max = 0.9866
+  [Step 297000] Ep 9900: mean F = 0.7946, max = 0.9744
+  [Step 300000] Ep 10000: mean F = 0.8118, max = 0.9859
+  Seed 153: 1305.4s, final mean F = 0.7947
+
+Best model for scenario C: F = 0.7947
+  Training logs saved to /share/liuyutian/rydberg-rl-entanglement/results/training_logs_C.json
+
+--- Evaluating methods on Scenario C ---
+  Evaluating STIRAP on scenario C...
+  trajectory 1/100  mean_F = 0.8583  (0.1s)
+  trajectory 50/100  mean_F = 0.8520  (13.4s)
+  trajectory 100/100  mean_F = 0.8545  (32.3s)
+  STIRAP C: F = 0.8545 +/- 0.1506
+  Optimizing GRAPE on scenario C (noiseless)...
+  GRAPE iter    0:  F = 0.999999
+  GRAPE noiseless F = 0.999999
+  Evaluating GRAPE under noise (100 trajectories)...
+  trajectory 1/100  mean_F = 0.8129  (0.1s)
+  trajectory 50/100  mean_F = 0.8122  (9.6s)
+  trajectory 100/100  mean_F = 0.8192  (24.4s)
+  GRAPE  C: F = 0.8192 +/- 0.1741
+  PPO    C: F = 0.7918 +/- 0.1400
+
+======================================================================
+                            SUMMARY TABLE                             
+======================================================================
+Scenario         STIRAP F      GRAPE F        PPO F
+------------ ------------ ------------ ------------
+C                  0.8545       0.8192       0.7918
+
+All experiments complete!

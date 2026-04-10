@@ -1,0 +1,39 @@
+2026-04-10 01:46:22.944351: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-04-10 01:46:23.004042: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-04-10 01:46:24.327335: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+############################################################
+# SCENARIO B: Short-time / full noise (primary scenario)
+############################################################
+
+============================================================
+Training PPO on Scenario B, seed=42
+============================================================
+  [Step 3000] Ep 100: mean F = 0.3652, max = 0.9813
+  [Step 6000] Ep 200: mean F = 0.5156, max = 0.9973
+  [Step 9000] Ep 300: mean F = 0.5973, max = 0.9860
+  [Step 12000] Ep 400: mean F = 0.6621, max = 0.9943
+  [Step 15000] Ep 500: mean F = 0.7185, max = 0.9921
+  [Step 18000] Ep 600: mean F = 0.6706, max = 0.9835
+  [Step 21000] Ep 700: mean F = 0.6824, max = 0.9905
+  [Step 24000] Ep 800: mean F = 0.7031, max = 0.9967
+  [Step 27000] Ep 900: mean F = 0.7108, max = 0.9951
+  [Step 30000] Ep 1000: mean F = 0.7190, max = 0.9931
+  [Step 33000] Ep 1100: mean F = 0.7236, max = 0.9952
+  [Step 36000] Ep 1200: mean F = 0.7545, max = 0.9968
+  [Step 39000] Ep 1300: mean F = 0.7728, max = 0.9905
+  [Step 42000] Ep 1400: mean F = 0.7480, max = 0.9944
+  [Step 45000] Ep 1500: mean F = 0.7801, max = 0.9947
+  [Step 48000] Ep 1600: mean F = 0.8147, max = 0.9949
+  [Step 51000] Ep 1700: mean F = 0.7909, max = 0.9961
+  [Step 54000] Ep 1800: mean F = 0.7685, max = 0.9975
+  [Step 57000] Ep 1900: mean F = 0.8246, max = 0.9895
+  [Step 60000] Ep 2000: mean F = 0.8629, max = 0.9969
+  [Step 63000] Ep 2100: mean F = 0.9036, max = 0.9965
+  [Step 66000] Ep 2200: mean F = 0.9203, max = 0.9958
+  [Step 69000] Ep 2300: mean F = 0.9613, max = 0.9956
+  [Step 72000] Ep 2400: mean F = 0.9684, max = 0.9958
+  [Step 75000] Ep 2500: mean F = 0.9666, max = 0.9952
+  [Step 78000] Ep 2600: mean F = 0.9717, max = 0.9962
+  [Step 81000] Ep 2700: mean F = 0.9771, max = 0.9965
