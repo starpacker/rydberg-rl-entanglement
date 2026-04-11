@@ -90,18 +90,56 @@ If ensemble GRAPE achieves F > 0.90, then even the closed-loop advantage shrinks
 
 Open-loop PPO (obs=t/T) fails to learn, achieving F=0.495 after 3M steps. GRAPE, using analytical gradients, achieves F=0.803 without any DR training. The 50% gap between closed-loop PPO (F=0.990) and open-loop methods is the value of observing ρ(t) at each step.
 
-**Recommendations:**
+## Update: CMA-ES Open-Loop Pulse Optimization
 
-1. **Acknowledge the closed-loop nature** in the paper. The current framing suggests PPO+DR is a practical improvement over GRAPE, but it requires mid-gate quantum state tomography.
+After open-loop PPO failed (F=0.495), we pursued **Option 3: fix the architecture** by switching from policy gradient to CMA-ES with direct pulse parameterization.
 
-2. **Implement ensemble GRAPE** as the fair baseline. If ensemble GRAPE ≈ 0.80, the closed-loop advantage is real but experimentally unrealizable. If ensemble GRAPE > 0.90, the contribution shrinks further.
+### CMA-ES approach
 
-3. **Reframe the contribution** as either:
-   - A forward-looking result for when mid-circuit measurement becomes feasible, OR
-   - Focus on scenarios A/B where the gap may be smaller, OR
-   - Develop a better open-loop PPO architecture (e.g., Fourier features, direct pulse parameterization) that can actually learn
+- **Parameterization:** Fourier series Ω(t) = Σ aₖsin(2πkt/T) + bₖcos(2πkt/T), same for Δ(t)
+- **Parameters:** 20 total (4 × 5 Fourier components for Ω and Δ)
+- **Optimizer:** CMA-ES (Covariance Matrix Adaptation Evolution Strategy)
+- **Fitness:** E_noise[F(θ, noise)] — mean fidelity over 20 noise realizations per candidate
+- **Population:** 20, max 300 generations
+
+### Results
+
+| Method | mean F | std F | F_05 | min F |
+|--------|--------|-------|------|-------|
+| Open-loop PPO (obs=t/T) | 0.495 | 0.110 | 0.339 | 0.302 |
+| **CMA-ES open-loop** | **0.980** | **0.019** | **0.946** | **0.846** |
+| GRAPE (noiseless-opt) | 0.803 | 0.163 | 0.507 | 0.085 |
+| Closed-loop PPO (obs=ρ+t) | 0.990 | 0.008 | 0.971 | 0.962 |
+
+**CMA-ES beats GRAPE by +0.177 (22% improvement)** on 200 test trajectories.
+
+### Key insights
+
+1. **Policy gradient fails for open-loop control under noise** — PPO with obs=t/T cannot learn because gradient variance is too high when different noise realizations produce vastly different rewards for the same actions.
+
+2. **CMA-ES succeeds** because it directly optimizes the fitness function E[F(θ,noise)] without policy gradients. Population-based search naturally handles noise variance.
+
+3. **Domain randomization does work** — CMA-ES trained on noisy trajectories finds a pulse that is robust across noise realizations (mean F=0.980), far exceeding GRAPE's noiseless-optimized pulse (F=0.803). The advantage is genuine: DR training produces noise-robust pulses.
+
+4. **The gap between CMA-ES open-loop (0.980) and closed-loop PPO (0.990) is only 0.010** — much smaller than the open-loop PPO gap (0.495). This means **most of the value comes from noise-robust pulse optimization, not from state feedback**.
+
+5. **Convergence:** CMA-ES converged in ~300 generations (43 min wall time), 6000 fitness evaluations total.
+
+### Revised conclusion
+
+The original claim that "PPO+DR beats GRAPE" is partially vindicated — but not by PPO. Open-loop CMA-ES+DR achieves F=0.980, beating GRAPE (0.803) by 22%. The remaining 1% gap to closed-loop PPO (0.990) is the genuine value of state feedback.
+
+**Recommendations (updated):**
+
+1. **Use CMA-ES as the open-loop baseline** instead of GRAPE. CMA-ES+DR (F=0.980) is the fair open-loop comparison for closed-loop PPO (F=0.990).
+
+2. **The contribution of closed-loop feedback is small (1%)** on Scenario C. If this holds across scenarios, the main contribution is the noise-robust pulse optimization methodology, not the closed-loop architecture.
+
+3. **Report both methods**: CMA-ES+DR as achievable (open-loop), PPO as the theoretical ceiling (closed-loop, requires mid-circuit tomography).
 
 **Files:**
 - Training logs: `results/training_logs_C_openloop.json` (partial, seed 42 only)
 - Evaluation: `results/openloop_comparison_C.json`
+- CMA-ES result: `results/cmaes_openloop_C.json`
+- CMA-ES script: `optimize_cmaes_openloop.py`
 - Models: `models/ppo_C_openloop_seed42.zip`, `models/ppo_C_openloop_best.zip`
