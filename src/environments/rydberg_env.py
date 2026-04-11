@@ -72,6 +72,7 @@ class RydbergBellEnv(gymnasium.Env):
         n_steps: int = 30,
         use_noise: bool = True,
         reward_shaping_alpha: float = 0.1,
+        obs_include_time: bool = False,
     ) -> None:
         super().__init__()
 
@@ -85,6 +86,7 @@ class RydbergBellEnv(gymnasium.Env):
         self.n_steps = n_steps
         self.use_noise = use_noise
         self.reward_shaping_alpha = reward_shaping_alpha
+        self.obs_include_time = obs_include_time
         self.T_gate: float = self.cfg["T_gate"]
         self.dt: float = self.T_gate / self.n_steps
         self.Omega_max: float = self.cfg["Omega"]
@@ -97,9 +99,11 @@ class RydbergBellEnv(gymnasium.Env):
         self._target_ket = get_target_state(2)
         self._target_dm_np = (self._target_ket * self._target_ket.dag()).full()
 
-        # Observation: real + imag parts of 4x4 density matrix = 32
+        # Observation: real + imag parts of 4x4 density matrix (32)
+        #            + optional time fraction t/T_gate (1)
+        obs_dim = 33 if self.obs_include_time else 32
         self.observation_space = spaces.Box(
-            low=-1.0, high=1.0, shape=(32,), dtype=np.float32
+            low=-1.0, high=1.0, shape=(obs_dim,), dtype=np.float32
         )
         # Action: normalised (Omega, Delta) in [-1, 1]
         self.action_space = spaces.Box(
@@ -201,7 +205,7 @@ class RydbergBellEnv(gymnasium.Env):
         else:
             self._c_ops_np = []
 
-        obs = self._rho_to_obs(self._rho_np)
+        obs = self._rho_to_obs(self._rho_np, time_frac=0.0 if self.obs_include_time else None)
         return obs, {}
 
     def step(
@@ -247,7 +251,8 @@ class RydbergBellEnv(gymnasium.Env):
 
         self._prev_fidelity = current_fid
 
-        obs = self._rho_to_obs(self._rho_np)
+        time_frac = self._step_count / self.n_steps if self.obs_include_time else None
+        obs = self._rho_to_obs(self._rho_np, time_frac=time_frac)
         return obs, reward, terminated, truncated, info
 
     def _build_hamiltonian_np(self, Omega: float, Delta: float) -> np.ndarray:
@@ -296,10 +301,17 @@ class RydbergBellEnv(gymnasium.Env):
         return np.trace(rho @ self._target_dm_np).real
 
     @staticmethod
-    def _rho_to_obs(rho: np.ndarray) -> np.ndarray:
-        """Flatten density matrix to 32-dim float32 observation."""
+    def _rho_to_obs(rho: np.ndarray, time_frac: float = None) -> np.ndarray:
+        """Flatten density matrix to observation vector.
+
+        If time_frac is not None, appends it as the last element (33-dim).
+        Otherwise returns 32-dim.
+        """
         real_part = rho.real.flatten()
         imag_part = rho.imag.flatten()
-        obs = np.concatenate([real_part, imag_part]).astype(np.float32)
+        parts = [real_part, imag_part]
+        if time_frac is not None:
+            parts.append([time_frac])
+        obs = np.concatenate(parts).astype(np.float32)
         obs = np.clip(obs, -1.0, 1.0)
         return obs
