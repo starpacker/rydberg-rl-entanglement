@@ -172,5 +172,6 @@ class NoiseModel:
             return C6 / R_base**6
         R_eff = R_base + (delta_R[1] - delta_R[0])
         if R_eff <= 0:
-            raise ValueError(f"Effective distance {R_eff:.4f} μm is non-positive.")
+            # Extreme noise realization: clamp to a small positive distance
+            R_eff = 0.01 * R_base
         return C6 / R_eff**6

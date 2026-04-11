@@ -73,11 +73,14 @@ class RydbergBellEnv(gymnasium.Env):
         use_noise: bool = True,
         reward_shaping_alpha: float = 0.1,
         obs_include_time: bool = False,
+        obs_mode: str = "full",
     ) -> None:
         super().__init__()
 
         if scenario not in SCENARIOS:
             raise ValueError(f"Unknown scenario '{scenario}'")
+        if obs_mode not in ("full", "time_only"):
+            raise ValueError(f"obs_mode must be 'full' or 'time_only', got '{obs_mode}'")
         self.scenario = scenario
         self.cfg = SCENARIOS[scenario]
         if self.cfg["n_atoms"] != 2:
@@ -87,6 +90,7 @@ class RydbergBellEnv(gymnasium.Env):
         self.use_noise = use_noise
         self.reward_shaping_alpha = reward_shaping_alpha
         self.obs_include_time = obs_include_time
+        self.obs_mode = obs_mode
         self.T_gate: float = self.cfg["T_gate"]
         self.dt: float = self.T_gate / self.n_steps
         self.Omega_max: float = self.cfg["Omega"]
@@ -99,11 +103,16 @@ class RydbergBellEnv(gymnasium.Env):
         self._target_ket = get_target_state(2)
         self._target_dm_np = (self._target_ket * self._target_ket.dag()).full()
 
-        # Observation: real + imag parts of 4x4 density matrix (32)
-        #            + optional time fraction t/T_gate (1)
-        obs_dim = 33 if self.obs_include_time else 32
+        # Observation space depends on obs_mode:
+        #   "full": rho flattened [real, imag] (32) + optional t/T (1) -> 32 or 33
+        #   "time_only": just (t/T,) -> 1  (open-loop: policy is pi(a|t))
+        if self.obs_mode == "time_only":
+            obs_dim = 1
+        else:
+            obs_dim = 33 if self.obs_include_time else 32
         self.observation_space = spaces.Box(
-            low=-1.0, high=1.0, shape=(obs_dim,), dtype=np.float32
+            low=-1.0 if self.obs_mode == "full" else 0.0,
+            high=1.0, shape=(obs_dim,), dtype=np.float32
         )
         # Action: normalised (Omega, Delta) in [-1, 1]
         self.action_space = spaces.Box(
@@ -205,7 +214,7 @@ class RydbergBellEnv(gymnasium.Env):
         else:
             self._c_ops_np = []
 
-        obs = self._rho_to_obs(self._rho_np, time_frac=0.0 if self.obs_include_time else None)
+        obs = self._get_obs(time_frac=0.0)
         return obs, {}
 
     def step(
@@ -251,9 +260,17 @@ class RydbergBellEnv(gymnasium.Env):
 
         self._prev_fidelity = current_fid
 
-        time_frac = self._step_count / self.n_steps if self.obs_include_time else None
-        obs = self._rho_to_obs(self._rho_np, time_frac=time_frac)
+        time_frac = self._step_count / self.n_steps
+        obs = self._get_obs(time_frac=time_frac)
         return obs, reward, terminated, truncated, info
+
+    def _get_obs(self, time_frac: float) -> np.ndarray:
+        """Build observation vector based on obs_mode."""
+        if self.obs_mode == "time_only":
+            return np.array([time_frac], dtype=np.float32)
+        else:
+            tf = time_frac if self.obs_include_time else None
+            return self._rho_to_obs(self._rho_np, time_frac=tf)
 
     def _build_hamiltonian_np(self, Omega: float, Delta: float) -> np.ndarray:
         """Build Hamiltonian with per-atom Doppler shifts (aligned with lindblad.py)."""
