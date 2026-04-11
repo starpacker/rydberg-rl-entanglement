@@ -120,16 +120,34 @@ def fig16_training_curve():
     seed_colors = [COLORS['blue'], COLORS['orange'], COLORS['red']]
 
     for idx, sd in enumerate(seeds_data):
-        fids = np.array(sd['fidelities'])
-        timesteps = np.array(sd.get('timesteps', np.arange(len(fids))))
+        # Skip seeds with very little data (< 10 points)
+        n_points = len(sd.get('fidelities', sd.get('mean_fidelities', [])))
+        if n_points < 10:
+            print(f"  Skipping seed {sd.get('seed', idx)} with only {n_points} data points")
+            continue
 
-        # Use timesteps on x-axis for better interpretability
-        smoothed = rolling_mean(fids, window=100)
-        seed_val = sd.get('seed', idx)
-        label = f"Seed {seed_val}"
-
-        ax.plot(timesteps, fids, color=seed_colors[idx % 3], alpha=0.04, linewidth=0.2)
-        ax.plot(timesteps, smoothed, color=seed_colors[idx % 3], linewidth=2.0, label=label)
+        # Support both formats: raw per-episode 'fidelities' or pre-averaged 'mean_fidelities'
+        if 'fidelities' in sd:
+            fids = np.array(sd['fidelities'])
+            timesteps = np.array(sd.get('timesteps', np.arange(len(fids))))
+            smoothed = rolling_mean(fids, window=100)
+            # Plot raw + smoothed
+            ax.plot(timesteps, fids, color=seed_colors[idx % 3], alpha=0.04, linewidth=0.2)
+            ax.plot(timesteps, smoothed, color=seed_colors[idx % 3], linewidth=2.0,
+                    label=f"Seed {sd.get('seed', idx)}")
+        elif 'mean_fidelities' in sd:
+            mean_fids = np.array(sd['mean_fidelities'])
+            timesteps = np.array(sd['timesteps'])
+            # Already averaged per window, just plot directly
+            ax.plot(timesteps, mean_fids, color=seed_colors[idx % 3], linewidth=2.0,
+                    label=f"Seed {sd.get('seed', idx)} (window avg)")
+            if 'max_fidelities' in sd:
+                max_fids = np.array(sd['max_fidelities'])
+                ax.plot(timesteps, max_fids, color=seed_colors[idx % 3], linewidth=0.8,
+                        alpha=0.4, linestyle='--', label=f"Seed {sd.get('seed', idx)} (max)")
+        else:
+            print(f"  Warning: seed {sd.get('seed', idx)} has no fidelity data")
+            continue
 
     # Reference lines for STIRAP and GRAPE
     try:
