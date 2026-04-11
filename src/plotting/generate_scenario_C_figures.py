@@ -73,7 +73,8 @@ def fig15_comparison():
     ax.set_ylabel(r'Fidelity $F$')
     ax.set_title('Scenario C: High-Noise Regime')
     y_min = min(mean_F) - max(yerr_lo) - 0.05
-    ax.set_ylim(max(0, y_min), 1.02)
+    y_max = max(m + s for m, s in zip(mean_F, std_F)) + 0.06
+    ax.set_ylim(max(0, y_min), min(1.08, y_max))
     ax.grid(axis='y', alpha=0.3, zorder=0)
 
     outpath = os.path.join(FIGDIR, 'fig15_scenario_C_comparison.png')
@@ -127,8 +128,8 @@ def fig16_training_curve():
         seed_val = sd.get('seed', idx)
         label = f"Seed {seed_val}"
 
-        ax.plot(timesteps, fids, color=seed_colors[idx % 3], alpha=0.06, linewidth=0.3)
-        ax.plot(timesteps, smoothed, color=seed_colors[idx % 3], linewidth=1.5, label=label)
+        ax.plot(timesteps, fids, color=seed_colors[idx % 3], alpha=0.04, linewidth=0.2)
+        ax.plot(timesteps, smoothed, color=seed_colors[idx % 3], linewidth=2.0, label=label)
 
     # Reference lines for STIRAP and GRAPE
     try:
@@ -299,14 +300,20 @@ def fig19_population_evolution():
 
         for i, state in enumerate(result.states):
             rho = state if state.isoper else qutip.ket2dm(state)
-            P_gg_s[i] = float(np.real((gg.dag() * rho * gg).full()[0, 0]))
-            P_W_s[i] = float(np.real((W.dag() * rho * W).full()[0, 0]))
-            P_rr_s[i] = float(np.real((rr.dag() * rho * rr).full()[0, 0]))
+            rho_arr = np.array(rho.full(), dtype=complex)
+            gg_arr = np.array(gg.full(), dtype=complex).flatten()
+            W_arr = np.array(W.full(), dtype=complex).flatten()
+            rr_arr = np.array(rr.full(), dtype=complex).flatten()
+            P_gg_s[i] = float(np.real(gg_arr.conj() @ rho_arr @ gg_arr))
+            P_W_s[i] = float(np.real(W_arr.conj() @ rho_arr @ W_arr))
+            P_rr_s[i] = float(np.real(rr_arr.conj() @ rho_arr @ rr_arr))
 
         stirap_ok = True
         print(f"  STIRAP noiseless F = {fid:.4f}")
     except Exception as e:
         print(f"  STIRAP simulation failed: {e}")
+        import traceback
+        traceback.print_exc()
         stirap_ok = False
 
     # PPO data

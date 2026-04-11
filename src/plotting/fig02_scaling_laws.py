@@ -68,10 +68,17 @@ for idx, (ax, x, y, ylabel, exponent, fit_label, color) in enumerate(panels):
     ax.text(0.05, 0.90, labels[idx], transform=ax.transAxes,
             fontsize=13, fontweight='bold', va='top')
 
+    # Fix x-axis: use simple scalar ticks instead of garbled log formatter
+    import matplotlib.ticker as ticker
+    ax.xaxis.set_major_formatter(ticker.ScalarFormatter())
+    ax.xaxis.set_minor_formatter(ticker.NullFormatter())
+    ax.set_xticks([20, 40, 60, 80, 100])
+
 fig.tight_layout()
 
 outpath = os.path.join(os.path.dirname(__file__), '../../', FIGURE_DIR, 'fig02_scaling_laws.pdf')
 os.makedirs(os.path.dirname(outpath), exist_ok=True)
 fig.savefig(outpath)
+fig.savefig(outpath.replace('.pdf', '.png'))
 plt.close(fig)
 print(f"Saved {os.path.abspath(outpath)}")

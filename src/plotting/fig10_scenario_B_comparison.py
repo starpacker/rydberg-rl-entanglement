@@ -22,9 +22,9 @@ with open(os.path.join(base, 'results', 'ppo_B.json')) as f:
     ppo = json.load(f)
 
 methods = ['STIRAP', 'GRAPE', 'PPO+DR']
-mean_F = [stirap['mean_F'], grape['mean_F'], ppo['mean_fidelity']]
-F_05   = [stirap['F_05'],   grape['F_05'],   np.percentile(ppo['fidelities'], 5)]
-std_F  = [stirap['std_F'],  grape['std_F'],  ppo['std_fidelity']]
+mean_F = [stirap['mean_F'], grape['mean_F'], ppo['mean_F']]
+F_05   = [stirap['F_05'],   grape['F_05'],   ppo['F_05']]
+std_F  = [stirap['std_F'],  grape['std_F'],  ppo['std_F']]
 
 # Asymmetric error bars: lower = mean - F_05, upper = std
 yerr_lo = [m - f5 for m, f5 in zip(mean_F, F_05)]
@@ -44,8 +44,8 @@ bars = ax.bar(x, mean_F, width=0.5, color=bar_colors, edgecolor='black',
               zorder=3)
 
 # Value labels
-for bar, val in zip(bars, mean_F):
-    y_top = bar.get_height() + std_F[bars.index(bar)] + 0.003
+for i, (bar, val) in enumerate(zip(bars, mean_F)):
+    y_top = bar.get_height() + std_F[i] + 0.003
     ax.text(bar.get_x() + bar.get_width() / 2, y_top,
             f'{val:.4f}', ha='center', va='bottom', fontsize=9, fontweight='bold')
 
@@ -59,5 +59,6 @@ ax.grid(axis='y', alpha=0.3, zorder=0)
 outpath = os.path.join(os.path.dirname(__file__), '../../', FIGURE_DIR, 'fig10_scenario_B_comparison.pdf')
 os.makedirs(os.path.dirname(outpath), exist_ok=True)
 fig.savefig(outpath)
+fig.savefig(outpath.replace('.pdf', '.png'))
 plt.close(fig)
 print(f"Saved {os.path.abspath(outpath)}")

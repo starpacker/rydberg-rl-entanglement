@@ -61,7 +61,7 @@ ax.text(env_x + env_w / 2, env_y + 0.35,
 # Policy box (right)
 pol_x, pol_y, pol_w, pol_h = 6.2, 3.5, 3.0, 2.0
 draw_box(ax, (pol_x, pol_y), pol_w, pol_h,
-         r'Policy $\pi_\theta$' + '\n(MLP [64, 64])',
+         r'Policy $\pi_\theta$' + '\n(MLP)',
          facecolor='#E8F8E0')
 
 # Reward box (bottom)
@@ -101,5 +101,6 @@ ax.text(5.0, 6.5, 'MDP formulation for Rydberg quantum control',
 outpath = os.path.join(os.path.dirname(__file__), '../../', FIGURE_DIR, 'fig09_mdp_schematic.pdf')
 os.makedirs(os.path.dirname(outpath), exist_ok=True)
 fig.savefig(outpath)
+fig.savefig(outpath.replace('.pdf', '.png'))
 plt.close(fig)
 print(f"Saved {os.path.abspath(outpath)}")

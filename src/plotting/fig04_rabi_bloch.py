@@ -64,23 +64,23 @@ bx = result_bloch.expect[0]
 by = result_bloch.expect[1]
 bz = result_bloch.expect[2]
 
-# 2D projection: plot (bx, bz) which shows the Rabi rotation in the x-z plane
+# 2D projection: plot (by, bz) — resonant Rabi with real coupling rotates in y-z plane
 # Draw unit circle
 theta_circ = np.linspace(0, 2 * np.pi, 200)
 ax_bloch.plot(np.cos(theta_circ), np.sin(theta_circ), 'k-', linewidth=0.5, alpha=0.3)
 ax_bloch.axhline(0, color='gray', linewidth=0.3)
 ax_bloch.axvline(0, color='gray', linewidth=0.3)
 
-# Trajectory
-ax_bloch.plot(bx, bz, color=COLORS['blue'], linewidth=1.3, label='Trajectory')
-ax_bloch.plot(bx[0], bz[0], 'o', color=COLORS['green'], markersize=7, zorder=5,
+# Trajectory: use y-z plane where the rotation actually happens
+ax_bloch.plot(by, bz, color=COLORS['blue'], linewidth=1.3, label='Trajectory')
+ax_bloch.plot(by[0], bz[0], 'o', color=COLORS['green'], markersize=7, zorder=5,
               label=r'$|g\rangle$')
-ax_bloch.plot(bx[npts // 4], bz[npts // 4], 's', color=COLORS['red'], markersize=7,
+ax_bloch.plot(by[npts // 4], bz[npts // 4], 's', color=COLORS['red'], markersize=7,
               zorder=5, label=r'$|r\rangle$')
 
-ax_bloch.set_xlabel(r'$\langle \sigma_x \rangle$')
+ax_bloch.set_xlabel(r'$\langle \sigma_y \rangle$')
 ax_bloch.set_ylabel(r'$\langle \sigma_z \rangle$')
-ax_bloch.set_title('(b) Bloch sphere (x-z)')
+ax_bloch.set_title('(b) Bloch sphere (y-z)')
 ax_bloch.set_aspect('equal')
 ax_bloch.set_xlim(-1.3, 1.3)
 ax_bloch.set_ylim(-1.3, 1.3)
@@ -91,5 +91,6 @@ fig.tight_layout()
 outpath = os.path.join(os.path.dirname(__file__), '../../', FIGURE_DIR, 'fig04_rabi_bloch.pdf')
 os.makedirs(os.path.dirname(outpath), exist_ok=True)
 fig.savefig(outpath)
+fig.savefig(outpath.replace('.pdf', '.png'))
 plt.close(fig)
 print(f"Saved {os.path.abspath(outpath)}")

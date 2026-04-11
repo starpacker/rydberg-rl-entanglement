@@ -77,5 +77,6 @@ ax.annotate('Free regime', xy=((R_b + 15) / 2, 0.3), fontsize=10,
 outpath = os.path.join(os.path.dirname(__file__), '../../', FIGURE_DIR, 'fig06_fidelity_vs_distance.pdf')
 os.makedirs(os.path.dirname(outpath), exist_ok=True)
 fig.savefig(outpath)
+fig.savefig(outpath.replace('.pdf', '.png'))
 plt.close(fig)
 print(f"Saved {os.path.abspath(outpath)}")
