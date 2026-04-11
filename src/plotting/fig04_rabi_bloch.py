@@ -75,7 +75,9 @@ ax_bloch.axvline(0, color='gray', linewidth=0.3)
 ax_bloch.plot(by, bz, color=COLORS['blue'], linewidth=1.3, label='Trajectory')
 ax_bloch.plot(by[0], bz[0], 'o', color=COLORS['green'], markersize=7, zorder=5,
               label=r'$|g\rangle$')
-ax_bloch.plot(by[npts // 4], bz[npts // 4], 's', color=COLORS['red'], markersize=7,
+# |r> state at t = pi/Omega = T/8 (half a Rabi period = pi-pulse)
+idx_r = npts // 8
+ax_bloch.plot(by[idx_r], bz[idx_r], 's', color=COLORS['red'], markersize=7,
               zorder=5, label=r'$|r\rangle$')
 
 ax_bloch.set_xlabel(r'$\langle \sigma_y \rangle$')

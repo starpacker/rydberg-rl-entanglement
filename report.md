@@ -68,9 +68,46 @@ $$\delta_{n\ell j} = \delta_0 + \frac{\delta_2}{(n - \delta_0)^2} + \cdots$$
 | $C_6$ 系数 | $\sim n^{*11}$ | van der Waals 相互作用极强，支撑 Rydberg blockade 机制 | ${\sim}862\;\text{GHz}{\cdot}\mu\text{m}^6$ |
 | 阻塞半径 $R_b$ | $\sim n^{*11/6}$ | 在 $R_b$ 内两原子无法同时激发，构成量子门操控的核心资源 | ${\sim}9.7\;\mu\text{m}$ ($\Omega/2\pi = 1\;\text{MHz}$) |
 
-以上标度律的物理根源在于 Rydberg 态波函数在空间上的大幅展开。轨道半径 $\langle r \rangle \propto n^{*2}$ 导致偶极矩元同样以 $n^{*2}$ 增长；极化率则涉及偶极矩的平方除以能级间距（$\propto n^{*-3}$），因而标度为 $n^{*7}$；辐射寿命 $\tau_{\text{rad}} \propto n^{*3}$ 源于自发辐射速率与跃迁偶极矩平方和跃迁频率三次方的乘积成正比，二者的 $n^*$ 依赖恰好给出三次方标度 [SWM10, Gallagher94]。
+以上标度律的物理根源在于 Rydberg 态波函数在空间上的大幅展开。以下逐一给出推导。
 
-$C_6$ 系数的 $n^{*11}$ 标度可以从二阶微扰论理解：$C_6 \propto d^4/\Delta E$，其中 $d \propto n^{*2}$ 为偶极矩元，$\Delta E \propto n^{*-3}$ 为 Förster 缺陷能，合计给出 $n^{*11}$。Rydberg blockade 半径定义为 $R_b = (C_6/\hbar\Omega)^{1/6}$，故标度为 $n^{*11/6}$ [SWM10]。
+### 轨道半径 $\langle r \rangle \propto n^{*2}$
+
+直接来自类氢原子的精确解。氢原子 $n\ell$ 态的径向期望值为
+
+$$\langle r \rangle_{n\ell} = \frac{a_0}{2}\bigl[3n^2 - \ell(\ell+1)\bigr].$$
+
+对于 $S$ 态（$\ell = 0$），$\langle r \rangle = \frac{3}{2} a_0 n^2$。在碱金属中，将 $n$ 替换为 $n^*$ 即得标度。偶极矩元 $d \sim e\langle r \rangle \propto n^{*2}$ 随之增长。
+
+### 辐射寿命 $\tau_{\text{rad}} \propto n^{*3}$
+
+由 Einstein $A$ 系数，自发辐射速率为
+$$A_{n \to n'} = \frac{4 \alpha \omega_{nn'}^3}{3 c^2} |\langle n' | r | n \rangle|^2.$$
+
+总衰变速率 $\Gamma = \sum_{n'} A_{n \to n'}$ 需要对所有低能级 $n'$ 求和。关键观察是：对于高 $n$ Rydberg 态，**主要衰变通道**指向最低的几个能级（$n' \sim$ 几），因为这些跃迁的偶极矩元最大。对于 $n' \ll n$ 的跃迁：
+- 跃迁频率 $\omega_{nn'} \approx \text{Ry}/(\hbar n'^2)$，几乎与 $n$ 无关；
+- 跃迁偶极矩元 $\langle n' | r | n \rangle \propto n^{*-3/2}$（来自氢原子径向波函数在小 $r$ 处的归一化因子 $\sim n^{-3/2}$，即波函数在内区域的振幅随 $n$ 增大而稀释）。
+
+因此 $\Gamma \propto \omega^3 \cdot |d|^2 \sim \text{const} \times (n^{*-3/2})^2 = n^{*-3}$，故 $\tau = 1/\Gamma \propto n^{*3}$。
+
+### $C_6$ 系数 $\propto n^{*11}$
+
+van der Waals 相互作用来自偶极–偶极耦合的二阶微扰论。两个处于 $|n\ell\rangle$ 态的原子，通过虚跃迁到中间态 $|n'\ell'\rangle|n''\ell''\rangle$ 获得能量修正：
+
+$$C_6 = -\sum_{n',n''} \frac{|\langle n'\ell',\, n''\ell'' | \hat{V}_{dd} | n\ell,\, n\ell \rangle|^2}{\Delta E_{n',n''}},$$
+
+其中 $\hat{V}_{dd} \propto d_1 d_2 / R^3$ 为偶极–偶极相互作用。主导贡献来自近简并的 pair state（如 $nS + nS \leftrightarrow (n-1)P + nP$），对这些通道：
+- 偶极矩元 $d \propto n^{*2}$（相邻能级间的跃迁），故 $V_{dd}$ 矩阵元 $\propto d^2 \propto n^{*4}$；
+- Förster 缺陷能 $\Delta E \propto n^{*-3}$（相邻 Rydberg 能级间距）。
+
+因此 $C_6 \propto d^4/\Delta E = (n^{*2})^4 / n^{*-3} = n^{*11}$。
+
+### 阻塞半径 $R_b \propto n^{*11/6}$
+
+Rydberg blockade 半径定义为 van der Waals 相互作用能等于驱动光场线宽的距离：$C_6/R_b^6 = \hbar\Omega$，解出 $R_b = (C_6/\hbar\Omega)^{1/6} \propto (n^{*11})^{1/6} = n^{*11/6}$（在固定 $\Omega$ 下）。
+
+### 极化率 $\alpha \propto n^{*7}$
+
+标量极化率由二阶微扰论给出：$\alpha \propto \sum_{n'} d_{nn'}^2/\Delta E_{nn'}$。主导贡献来自 $n' \approx n$ 的近邻态，此时 $d \propto n^{*2}$，$\Delta E \propto n^{*-3}$，故 $\alpha \propto n^{*4}/n^{*-3} = n^{*7}$。
 
 总而言之，Rydberg 态独特地结合了长寿命（$\tau \sim n^{*3}$）与强相互作用（$C_6 \sim n^{*11}$），这一组合在自然界的原子态中几乎无可替代——它正是里德堡原子量子计算平台的物理基石。
 
@@ -137,7 +174,7 @@ $$
 
 在 $\{|g\rangle, |r\rangle\}$ 基下，裸 Hamiltonian 为 $\hat{H}_0 = \hbar\omega_0 |r\rangle\langle r|$（取 $E_g = 0$）。由宇称选择定则，$\langle g|\hat{\mathbf{d}}|g\rangle = \langle r|\hat{\mathbf{d}}|r\rangle = 0$，因此 $\hat{H}_I$ 仅具有非对角矩阵元。
 
-### Bare Rabi frequency
+### Bare Rabi frequency 的物理来源
 
 定义 **bare Rabi frequency**
 
@@ -145,13 +182,20 @@ $$
 \Omega = -\frac{\mathbf{d}_{rg} \cdot \mathbf{E}_0}{\hbar},
 $$
 
-其中 $\mathbf{d}_{rg} = \langle r|\hat{\mathbf{d}}|g\rangle$ 为跃迁偶极矩元。总 Hamiltonian 在 Schr\"{o}dinger picture 下为
+其中 $\mathbf{d}_{rg} = \langle r|\hat{\mathbf{d}}|g\rangle$ 为跃迁偶极矩元。$\Omega$ 的物理意义是激光场驱动原子在 $|g\rangle$ 和 $|r\rangle$ 之间振荡的角频率。它由两个因素决定：
+
+1. **跃迁偶极矩元** $d_{rg} = |\langle r|\hat{\mathbf{d}}|g\rangle|$：反映原子的内禀耦合强度，由初末态的径向与角向波函数重叠积分决定。对于碱金属原子的低激发态到 Rydberg 态的直接跃迁，$d_{rg}$ 很小（$\propto n^{*-3/2}$），因此实验中通常采用双光子方案（见 §2.2）。
+2. **激光电场振幅** $E_0$：与激光功率 $P$ 和束腰 $w$ 的关系为 $E_0 = \sqrt{2P/(\pi w^2 c \epsilon_0)}$。通过聚焦激光束（减小 $w$）或增大功率可提高 $\Omega$。
+
+典型实验值：对于 ${}^{87}$Rb 的双光子激发至 $|70S\rangle$，使用 $\sim 100\;\text{mW}$ 聚焦激光可实现 $\Omega/2\pi \sim 1\text{--}10\;\text{MHz}$。
+
+总 Hamiltonian 在 Schrödinger picture 下为
 
 $$
 \hat{H} = \hbar\omega_0 |r\rangle\langle r| + \frac{\hbar\Omega}{2}\bigl(e^{-i\omega_L t} + e^{i\omega_L t}\bigr)\bigl(|r\rangle\langle g| + |g\rangle\langle r|\bigr).
 $$
 
-### 旋转坐标变换
+### 旋转坐标变换（详细推导）
 
 引入 **rotating frame** 变换
 
@@ -165,23 +209,75 @@ $$
 \hat{H}_{\text{rot}} = \hat{U}^\dagger \hat{H} \hat{U} - i\hbar\,\hat{U}^\dagger \dot{\hat{U}}.
 $$
 
-展开后得到四项：两项以频率 $\omega_0 - \omega_L$ 缓变（near-resonant terms），两项以频率 $\omega_0 + \omega_L \approx 2\omega_L$ 快速振荡（counter-rotating terms）。
+我们逐项计算。
+
+**第一步：计算 $\hat{U}$ 的具体作用。** 由于 $|r\rangle\langle r|$ 是投影算符（$|r\rangle\langle r|^2 = |r\rangle\langle r|$），指数展开给出
+
+$$
+\hat{U}(t) = |g\rangle\langle g| + e^{-i\omega_L t}|r\rangle\langle r|, \qquad \hat{U}^\dagger(t) = |g\rangle\langle g| + e^{i\omega_L t}|r\rangle\langle r|.
+$$
+
+因此 $\hat{U}$ 对基矢的作用为：$\hat{U}|g\rangle = |g\rangle$，$\hat{U}|r\rangle = e^{-i\omega_L t}|r\rangle$。
+
+**第二步：变换裸 Hamiltonian $\hat{H}_0 = \hbar\omega_0|r\rangle\langle r|$。**
+
+$$
+\hat{U}^\dagger \hat{H}_0 \hat{U} = \hbar\omega_0\,\hat{U}^\dagger|r\rangle\langle r|\hat{U} = \hbar\omega_0\,e^{i\omega_L t}|r\rangle \cdot \langle r|e^{-i\omega_L t} = \hbar\omega_0|r\rangle\langle r|.
+$$
+
+裸能量部分不变（对角项不受 $\hat{U}$ 影响）。
+
+**第三步：变换耦合项 $\hat{H}_I$。** 先看 $|r\rangle\langle g|$：
+
+$$
+\hat{U}^\dagger |r\rangle\langle g| \hat{U} = (e^{i\omega_L t}|r\rangle)(\langle g|) = e^{i\omega_L t}|r\rangle\langle g|.
+$$
+
+类似地 $\hat{U}^\dagger |g\rangle\langle r| \hat{U} = e^{-i\omega_L t}|g\rangle\langle r|$。因此耦合项变为
+
+$$
+\hat{U}^\dagger \hat{H}_I \hat{U} = \frac{\hbar\Omega}{2}\bigl(e^{-i\omega_L t} + e^{i\omega_L t}\bigr)\bigl(e^{i\omega_L t}|r\rangle\langle g| + e^{-i\omega_L t}|g\rangle\langle r|\bigr).
+$$
+
+展开括号得到 **四项**：
+
+$$
+= \frac{\hbar\Omega}{2}\Bigl[\underbrace{|r\rangle\langle g| + |g\rangle\langle r|}_{\text{缓变项 (near-resonant)}} + \underbrace{e^{2i\omega_L t}|r\rangle\langle g| + e^{-2i\omega_L t}|g\rangle\langle r|}_{\text{快振荡项 (counter-rotating)}}\Bigr].
+$$
+
+**第四步：计算 $-i\hbar\hat{U}^\dagger\dot{\hat{U}}$。**
+
+$$
+\dot{\hat{U}} = -i\omega_L|r\rangle\langle r|\,e^{-i\omega_L t} = -i\omega_L\,e^{-i\omega_L t}|r\rangle\langle r|,
+$$
+
+$$
+-i\hbar\hat{U}^\dagger\dot{\hat{U}} = -i\hbar\,(e^{i\omega_L t}|r\rangle\langle r|)(-i\omega_L\,e^{-i\omega_L t}|r\rangle\langle r|) = -\hbar\omega_L|r\rangle\langle r|.
+$$
+
+**合并所有项**：
+
+$$
+\hat{H}_{\text{rot}} = (\hbar\omega_0 - \hbar\omega_L)|r\rangle\langle r| + \frac{\hbar\Omega}{2}\bigl[|r\rangle\langle g| + |g\rangle\langle r|\bigr] + \frac{\hbar\Omega}{2}\bigl[e^{2i\omega_L t}|r\rangle\langle g| + e^{-2i\omega_L t}|g\rangle\langle r|\bigr].
+$$
 
 ### 旋转波近似 (RWA)
 
-当 **bare Rabi frequency** 远小于光学频率，即
+最后两项以频率 $2\omega_L$ 快速振荡。当 **bare Rabi frequency** 远小于光学频率，即
 
 $$
 \left|\frac{\Omega}{\omega_L}\right| \ll 1,
 $$
 
-快振荡项 $\sim e^{\pm 2i\omega_L t}$ 在任何实验可分辨的时间尺度上平均为零，可安全丢弃。对于光学跃迁（$\omega_L/2\pi \sim 10^{14}\;\text{Hz}$, $\Omega/2\pi \sim \text{MHz}$），该条件以极大余量满足。丢弃 counter-rotating terms 后，定义 detuning $\Delta = \omega_L - \omega_0$，得到 **RWA 有效 Hamiltonian**：
+这些快振荡项 $\sim e^{\pm 2i\omega_L t}$ 在任何实验可分辨的时间尺度 $\Delta t \gg 1/\omega_L$ 上平均为零，可安全丢弃。对于光学跃迁（$\omega_L/2\pi \sim 10^{14}\;\text{Hz}$, $\Omega/2\pi \sim \text{MHz}$），该条件以 $\sim 10^8$ 的余量满足。
+
+丢弃 counter-rotating terms 后，定义 detuning $\Delta = \omega_L - \omega_0$（激光频率减去原子跃迁频率），得到 **RWA 有效 Hamiltonian**：
 
 $$
 \hat{H}_{\text{rot}} = -\hbar\Delta\,|r\rangle\langle r| + \frac{\hbar\Omega}{2}\bigl(|r\rangle\langle g| + |g\rangle\langle r|\bigr). \tag{2.1}
 $$
 
-这是一个时间无关的二能级 Hamiltonian，完全由两个实验可调参数 $(\Omega, \Delta)$ 控制。
+这是一个 **时间无关** 的二能级 Hamiltonian，完全由两个实验可调参数 $(\Omega, \Delta)$ 控制——这正是旋转坐标变换的核心优势：将含时问题化为静态问题。
 
 ### Bloch 球图像
 
@@ -231,7 +327,42 @@ $$
 
 ### 绝热消除
 
-在大失谐极限 $\Delta \gg \Omega_1, \Omega_2$ 下，中间态 $|e\rangle$ 的布居极小，可被绝热消除（adiabatic elimination）。核心思路是：在三能级的振幅方程中，设 $\dot{c}_e \approx 0$（等价地，投影掉快变子空间），将 $c_e$ 用 $c_g, c_r$ 表示后代入，得到一个有效的二能级系统。其 **effective Rabi frequency** 和 **differential AC Stark shift** 分别为
+在大失谐极限 $\Delta \gg \Omega_1, \Omega_2$ 下，中间态 $|e\rangle$ 的布居极小（$|c_e|^2 \sim \Omega_1^2/4\Delta^2 \ll 1$），其振幅可被绝热消除（adiabatic elimination）。以下给出核心推导步骤（完整的 Schrieffer-Wolff 变换见附录 B）。
+
+在 rotating frame 中，三能级 Hamiltonian（取 $\hbar = 1$，双光子共振 $\delta = 0$）为
+
+$$
+\hat{H} = \begin{pmatrix} 0 & \Omega_1/2 & 0 \\ \Omega_1/2 & -\Delta & \Omega_2/2 \\ 0 & \Omega_2/2 & 0 \end{pmatrix},
+$$
+
+其中行/列分别对应 $|g\rangle, |e\rangle, |r\rangle$。注意 $|g\rangle$ 和 $|r\rangle$ 之间无直接耦合（偶极选择定则）。
+
+将态展开为 $|\psi\rangle = c_g|g\rangle + c_e|e\rangle + c_r|r\rangle$，代入 Schrödinger 方程 $i\dot{c} = Hc$，得到三个耦合方程：
+
+$$
+i\dot{c}_g = \frac{\Omega_1}{2}c_e, \qquad i\dot{c}_e = \frac{\Omega_1}{2}c_g - \Delta c_e + \frac{\Omega_2}{2}c_r, \qquad i\dot{c}_r = \frac{\Omega_2}{2}c_e.
+$$
+
+**绝热条件**：当 $\Delta \gg \Omega_1, \Omega_2$ 时，$c_e$ 的自然振荡频率 $\sim \Delta$ 远快于 $c_g, c_r$ 的演化时间尺度 $\sim \Omega_1\Omega_2/\Delta$。因此 $c_e$ 迅速弛豫到由 $c_g, c_r$ 决定的准静态值——即设 $\dot{c}_e \approx 0$：
+
+$$
+0 \approx \frac{\Omega_1}{2}c_g - \Delta c_e + \frac{\Omega_2}{2}c_r \quad \Longrightarrow \quad c_e = \frac{\Omega_1 c_g + \Omega_2 c_r}{2\Delta}.
+$$
+
+将 $c_e$ 代回 $c_g$ 和 $c_r$ 的方程：
+
+$$
+i\dot{c}_g = \frac{\Omega_1^2}{4\Delta}c_g + \frac{\Omega_1\Omega_2}{4\Delta}c_r, \qquad
+i\dot{c}_r = \frac{\Omega_1\Omega_2}{4\Delta}c_g + \frac{\Omega_2^2}{4\Delta}c_r.
+$$
+
+写成矩阵形式 $i\dot{\mathbf{c}} = H_{\text{eff}}\mathbf{c}$，得到有效二能级 Hamiltonian：
+
+$$
+H_{\text{eff}} = \begin{pmatrix} \Omega_1^2/(4\Delta) & \Omega_1\Omega_2/(4\Delta) \\ \Omega_1\Omega_2/(4\Delta) & \Omega_2^2/(4\Delta) \end{pmatrix}.
+$$
+
+从中读出两个关键物理量——**effective Rabi frequency** 和 **differential AC Stark shift** 分别为
 
 $$
 \Omega_{\text{eff}} = \frac{\Omega_1 \Omega_2}{2\Delta}, \tag{2.2}
@@ -257,7 +388,7 @@ $$
 
 ### 数值锚点
 
-以 de L\'{e}s\'{e}leuc 等人 [dL18] 的实验参数为例：$\Omega_1/2\pi \sim 100\;\text{MHz}$, $\Delta/2\pi \sim 740\;\text{MHz}$, 由此得到 $\Omega_{\text{eff}}/2\pi \sim 2\;\text{MHz}$。此时散射速率 $R_{\text{sc}} \sim \gamma_{5P} \times (100/740)^2/4 \approx 27\;\text{kHz}$，在典型门时间 $T_{\text{gate}} \sim 0.5\;\mu\text{s}$ 内散射概率约 $1.4\%$——这正是推动实验组选择更大失谐（如 $\Delta/2\pi \sim 7.8\;\text{GHz}$ via $6P_{3/2}$, [Evered23]）的动机之一。
+以 de Léséleuc 等人 [dL18] 的实验参数为例：$\Omega_1/2\pi \sim 100\;\text{MHz}$, $\Delta/2\pi \sim 740\;\text{MHz}$, 由此得到 $\Omega_{\text{eff}}/2\pi \sim 2\;\text{MHz}$。此时散射速率 $R_{\text{sc}} \sim \gamma_{5P} \times (100/740)^2/4 \approx 27\;\text{kHz}$，在典型门时间 $T_{\text{gate}} \sim 0.5\;\mu\text{s}$ 内散射概率约 $1.4\%$——这正是推动实验组选择更大失谐（如 $\Delta/2\pi \sim 7.8\;\text{GHz}$ via $6P_{3/2}$, [Evered23]）的动机之一。
 
 ![图 3：双光子激发方案示意图](figures/fig03_two_photon.png)
 
@@ -273,7 +404,7 @@ $$
 
 ---
 
-**本节关键引用**：[SWM10] Saffman, Walker & M\o{}lmer, RMP 2010, \S IV; [dL18] de L\'{e}s\'{e}leuc et al., PRA 2018; [WS08] Walker & Saffman, PRA 2008.
+**本节关键引用**：[SWM10] Saffman, Walker & Mølmer, RMP 2010, §IV; [dL18] de Léséleuc et al., PRA 2018; [WS08] Walker & Saffman, PRA 2008.
 
 ---
 
@@ -443,12 +574,68 @@ $$|W_N\rangle = \frac{1}{\sqrt{N}}\sum_{k=1}^{N}|g\cdots r_k\cdots g\rangle$$
 
 ### 3.3.3 从 Bell 态到 CZ 门：Levine 协议
 
-在实际量子计算中，我们更需要的是 controlled-Z (CZ) 门而非单纯的 Bell 态制备。Levine 等人 [Levine19] 提出了一个优雅的两段式协议：
+在实际量子计算中，我们更需要的是 controlled-Z (CZ) 门而非单纯的 Bell 态制备。Levine 等人 [Levine19] 提出了一个优雅的三段式协议。为理解其物理本质，我们先解释两个关键机制。
 
-1. **第一段**：对控制原子施加 $\pi$ 脉冲（$|g\rangle_c \to |r\rangle_c$，或 $|r\rangle_c \to |g\rangle_c$），条件性地阻塞目标原子；
-2. **第二段**：对目标原子施加 $2\pi$ 脉冲——若未被阻塞，则获得一个 $\pi$ 几何相位；若被阻塞，则无变化。
+#### 2π 脉冲的几何相位
 
-整体效应为 $|rr\rangle \to -|rr\rangle$，其余 basis 不变——精确实现了 CZ 门。
+考虑单个二能级原子初始处于 $|g\rangle$，受到共振驱动（$\Delta = 0$）。在 Bloch 球图像中，共振 Rabi 驱动使态矢量绕赤道上的某轴旋转。一个 $2\pi$ 脉冲（持续时间 $t = 2\pi/\Omega$）将态矢量从北极出发，经过南极，再回到北极——完成了 Bloch 球上一个完整的大圆环路。
+
+根据量子力学的一般性质，自旋-1/2 系统绕任意轴旋转 $2\pi$ 后获得一个 $-1$ 的全局相位因子。这可以从 Rabi 演化的精确解看出：时间演化算符为
+
+$$
+\hat{U}(t) = \cos\!\left(\frac{\Omega t}{2}\right)\hat{I} - i\sin\!\left(\frac{\Omega t}{2}\right)\hat{\sigma}_x,
+$$
+
+当 $\Omega t = 2\pi$ 时，$\cos(\pi) = -1$，$\sin(\pi) = 0$，因此
+
+$$
+\hat{U}(2\pi/\Omega) = -\hat{I}.
+$$
+
+即 $|g\rangle \to -|g\rangle$：**态不变，但获得了一个 $\pi$ 相位**（全局相位因子 $e^{i\pi} = -1$）。这是 SU(2) 群的拓扑性质——自旋-1/2 粒子需要旋转 $4\pi$（而非 $2\pi$）才能真正回到原态。
+
+#### Blockade 如何阻止激发
+
+当控制原子处于 $|r\rangle_c$ 时，目标原子试图被激发到 $|r\rangle_t$ 需要克服 van der Waals 相互作用能 $V = C_6/R^6$。在 blockade 极限 $V \gg \Omega$ 下，这相当于对目标原子施加了一个极大的有效 detuning $\Delta_{\text{eff}} \sim V$。
+
+此时广义 Rabi 频率 $\Omega' = \sqrt{\Omega^2 + V^2} \approx V$，而最大激发概率仅为
+
+$$
+P_r^{\max} = \frac{\Omega^2}{\Omega^2 + V^2} \approx \frac{\Omega^2}{V^2} \ll 1.
+$$
+
+目标原子几乎无法被激发——它被"冻结"在 $|g\rangle_t$，对施加的激光脉冲几乎无响应。因此，无论对目标原子施加什么脉冲（$\pi$ 或 $2\pi$），结果都是 $|g\rangle_t \to |g\rangle_t$（无相位变化，因为原子根本未参与旋转）。
+
+#### 完整的 CZ 门协议
+
+Levine 协议分三步（对两个原子分别/同时操作）：
+
+1. **第一步**：对控制原子施加 $\pi$ 脉冲（$|g\rangle_c \to |r\rangle_c$）；
+2. **第二步**：对目标原子施加 $2\pi$ 脉冲；
+3. **第三步**：对控制原子施加 $\pi$ 脉冲（$|r\rangle_c \to |g\rangle_c$，回到基态）。
+
+对四个计算基态逐一追踪相位：
+
+| 初态 | 第一步后 | 第二步 | 第三步后 | 净相位 |
+|------|---------|--------|---------|--------|
+| $\|gg\rangle$ | $\|rg\rangle$ | 目标原子被阻塞，无变化 | $\|gg\rangle$ | $+1$ |
+| $\|gr\rangle$ | $\|rr\rangle$* | (此路径不发生) | — | 见下文 |
+| $\|ge\rangle$ 编码 | — | — | — | — |
+
+更精确地说，量子计算中的 CZ 门作用于 **qubit 编码态**（$|0\rangle, |1\rangle$ 为两个超精细基态），Rydberg 态 $|r\rangle$ 仅作为辅助。标准 Levine 协议中，qubit $|1\rangle$ 被映射到 $|r\rangle$（通过 $\pi$ 脉冲），qubit $|0\rangle$ 不参与。逐一分析：
+
+- **$|00\rangle$**：两个原子都不响应 Rydberg 激光（$|0\rangle$ 不耦合），无变化。相位 $= +1$。
+- **$|01\rangle$**：控制原子不响应（$|0\rangle$），目标原子经历完整 $2\pi$ Rabi 循环（无阻塞），获得相位 $-1$。但注意控制原子的 $\pi$ 脉冲也不作用（$|0\rangle$ 不耦合）。**净效应**：需要通过单比特旋转修正此相。
+- **$|10\rangle$**：控制原子 $|1\rangle \xrightarrow{\pi} |r\rangle$，目标原子 $|0\rangle$ 不耦合 $2\pi$ 脉冲，控制原子 $|r\rangle \xrightarrow{\pi} |1\rangle$。无相位变化。
+- **$|11\rangle$**：控制原子 $|1\rangle \xrightarrow{\pi} |r\rangle$，目标原子被阻塞（$2\pi$ 脉冲无效果），控制原子 $|r\rangle \xrightarrow{\pi} |1\rangle$。**无** $-1$ 相位——但 $|01\rangle$ 获得了 $-1$！
+
+实际上 Levine 协议的净效应是对 $|01\rangle$ 态施加 $-1$ 相位，这与 CZ 门差一个单比特 Z 旋转。通过在协议前后添加适当的单比特旋转（在实验中通过调节微波脉冲相位实现），可以将其变换为标准 CZ 门：
+
+$$
+\text{CZ}: \quad |00\rangle \to |00\rangle, \quad |01\rangle \to |01\rangle, \quad |10\rangle \to |10\rangle, \quad |11\rangle \to -|11\rangle.
+$$
+
+**核心物理图像**：$2\pi$ 脉冲的 $-1$ 相位是 SU(2) 的拓扑相位（自旋-1/2 的 $2\pi$ 旋转），而 blockade 通过阻止目标原子参与 Rabi 旋转来选择性地 **关闭** 这一相位——这正是条件性相位门的物理本质。
 
 实验上，Bell 态保真度的记录不断刷新：
 
