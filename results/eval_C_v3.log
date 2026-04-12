@@ -1,0 +1,63 @@
+2026-04-10 14:31:24.383816: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-04-10 14:31:24.450291: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-04-10 14:31:25.644368: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Loading PPO model from /share/liuyutian/rydberg-rl-entanglement/models/ppo_C_v2_best
+
+--- PPO evaluation (200 trajectories) ---
+  trajectory 50/200: mean_F = 0.9886
+  trajectory 100/200: mean_F = 0.9889
+  trajectory 150/200: mean_F = 0.9893
+  trajectory 200/200: mean_F = 0.9895
+  PPO: mean_F = 0.9895 +/- 0.0079, F_05 = 0.9707
+
+--- PPO pulse + populations (noiseless) ---
+  Noiseless PPO fidelity: 0.998413
+
+--- STIRAP evaluation (200 trajectories) ---
+  trajectory 1/200  mean_F = 0.8603  (0.1s)
+  trajectory 50/200  mean_F = 0.8532  (8.7s)
+  trajectory 100/200  mean_F = 0.8534  (21.8s)
+  trajectory 150/200  mean_F = 0.8439  (35.6s)
+  trajectory 200/200  mean_F = 0.8498  (56.3s)
+  STIRAP: mean_F = 0.8498 +/- 0.1500, F_05 = 0.5492
+
+--- GRAPE optimization + evaluation (200 trajectories) ---
+  Optimizing GRAPE (noiseless, 60 steps, 1000 iterations)...
+  GRAPE iter    0:  F = 0.999999
+  GRAPE noiseless F = 0.999999
+  Evaluating GRAPE under noise...
+  trajectory 1/200  mean_F = 0.8309  (0.1s)
+  trajectory 50/200  mean_F = 0.8153  (9.5s)
+  trajectory 100/200  mean_F = 0.8184  (26.8s)
+  trajectory 150/200  mean_F = 0.8074  (38.6s)
+  trajectory 200/200  mean_F = 0.8135  (53.9s)
+  GRAPE: mean_F = 0.8135 +/- 0.1665, F_05 = 0.4710
+
+--- Robustness sweep ---
+  delta_Omega = 0%
+    STIRAP=0.8533, GRAPE=0.8179, PPO=0.9902
+  delta_Omega = 1%
+    STIRAP=0.8547, GRAPE=0.8187, PPO=0.9902
+  delta_Omega = 2%
+    STIRAP=0.8526, GRAPE=0.8166, PPO=0.9893
+  delta_Omega = 3%
+    STIRAP=0.8491, GRAPE=0.8125, PPO=0.9891
+  delta_Omega = 4%
+    STIRAP=0.8484, GRAPE=0.8148, PPO=0.9896
+  delta_Omega = 5%
+    STIRAP=0.8447, GRAPE=0.8115, PPO=0.9890
+
+============================================================
+                     SCENARIO C RESULTS                     
+============================================================
+Method           mean_F      std_F       F_05
+------------ ---------- ---------- ----------
+PPO              0.9895     0.0079     0.9707
+STIRAP           0.8498     0.1500     0.5492
+GRAPE            0.8135     0.1665     0.4710
+
+PPO advantage over STIRAP: +0.1397
+PPO advantage over GRAPE:  +0.1761
+
+All evaluations complete!

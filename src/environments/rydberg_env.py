@@ -74,6 +74,7 @@ class RydbergBellEnv(gymnasium.Env):
         reward_shaping_alpha: float = 0.1,
         obs_include_time: bool = False,
         obs_mode: str = "full",
+        noise_scale: float = None,
     ) -> None:
         super().__init__()
 
@@ -91,6 +92,7 @@ class RydbergBellEnv(gymnasium.Env):
         self.reward_shaping_alpha = reward_shaping_alpha
         self.obs_include_time = obs_include_time
         self.obs_mode = obs_mode
+        self.noise_scale = noise_scale
         self.T_gate: float = self.cfg["T_gate"]
         self.dt: float = self.T_gate / self.n_steps
         self.Omega_max: float = self.cfg["Omega"]
@@ -98,7 +100,7 @@ class RydbergBellEnv(gymnasium.Env):
         self.C6: float = C6_53S
         self.dim = 4  # 2-qubit Hilbert space dimension
 
-        self.noise_model = NoiseModel(scenario) if use_noise else None
+        self.noise_model = NoiseModel(scenario, noise_scale=noise_scale) if use_noise else None
 
         self._target_ket = get_target_state(2)
         self._target_dm_np = (self._target_ket * self._target_ket.dag()).full()

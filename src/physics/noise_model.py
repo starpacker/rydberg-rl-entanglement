@@ -35,14 +35,17 @@ class NoiseModel:
         One of "A", "B", "D".
     """
 
-    def __init__(self, scenario: str) -> None:
+    def __init__(self, scenario: str, noise_scale: float = None) -> None:
         if scenario not in SCENARIOS:
             raise ValueError(f"Unknown scenario '{scenario}'. Must be one of {list(SCENARIOS)}")
         self.scenario = scenario
         self.cfg = SCENARIOS[scenario]
         self.n_atoms: int = self.cfg["n_atoms"]
         self.active: List[str] = list(self.cfg["noise_sources"])
-        self.noise_amp: float = self.cfg.get("noise_amplification", 1.0)
+        if noise_scale is not None:
+            self.noise_amp = float(noise_scale)
+        else:
+            self.noise_amp: float = self.cfg.get("noise_amplification", 1.0)
         self.amp_bias_range: float = self.cfg.get("amplitude_bias_range", 0.0)
 
     # ------------------------------------------------------------------

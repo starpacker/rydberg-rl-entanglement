@@ -1,0 +1,110 @@
+2026-04-10 13:08:02.435552: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-04-10 13:08:02.500569: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-04-10 13:08:03.618035: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Training PPO on Scenario C, seed=42, 1.5M steps, 60 ctrl steps
+  [Step 6000] Ep 100: mean F = 0.5033, max F = 0.9712
+  [Step 12000] Ep 200: mean F = 0.4999, max F = 0.9728
+  [Step 18000] Ep 300: mean F = 0.5496, max F = 0.9785
+  [Step 24000] Ep 400: mean F = 0.6068, max F = 0.9816
+  [Step 30000] Ep 500: mean F = 0.5957, max F = 0.9776
+  [Step 36000] Ep 600: mean F = 0.6067, max F = 0.9778
+  [Step 42000] Ep 700: mean F = 0.6734, max F = 0.9843
+  [Step 48000] Ep 800: mean F = 0.6742, max F = 0.9805
+  [Step 54000] Ep 900: mean F = 0.7231, max F = 0.9758
+  [Step 60000] Ep 1000: mean F = 0.7851, max F = 0.9884
+  [Step 66000] Ep 1100: mean F = 0.8000, max F = 0.9765
+  [Step 72000] Ep 1200: mean F = 0.8178, max F = 0.9729
+  [Step 78000] Ep 1300: mean F = 0.8345, max F = 0.9861
+  [Step 84000] Ep 1400: mean F = 0.8250, max F = 0.9786
+  [Step 90000] Ep 1500: mean F = 0.8756, max F = 0.9913
+  [Step 96000] Ep 1600: mean F = 0.8666, max F = 0.9842
+  [Step 102000] Ep 1700: mean F = 0.8686, max F = 0.9822
+  [Step 108000] Ep 1800: mean F = 0.8696, max F = 0.9787
+  [Step 114000] Ep 1900: mean F = 0.8702, max F = 0.9924
+  [Step 120000] Ep 2000: mean F = 0.8762, max F = 0.9896
+  [Step 126000] Ep 2100: mean F = 0.8893, max F = 0.9910
+  [Step 132000] Ep 2200: mean F = 0.8798, max F = 0.9907
+  [Step 138000] Ep 2300: mean F = 0.8957, max F = 0.9793
+  [Step 144000] Ep 2400: mean F = 0.8915, max F = 0.9905
+  [Step 150000] Ep 2500: mean F = 0.8972, max F = 0.9881
+  [Step 156000] Ep 2600: mean F = 0.9084, max F = 0.9899
+  [Step 162000] Ep 2700: mean F = 0.9085, max F = 0.9929
+  [Step 168000] Ep 2800: mean F = 0.9083, max F = 0.9888
+  [Step 174000] Ep 2900: mean F = 0.8954, max F = 0.9850
+  [Step 180000] Ep 3000: mean F = 0.9133, max F = 0.9876
+  [Step 186000] Ep 3100: mean F = 0.9123, max F = 0.9909
+  [Step 192000] Ep 3200: mean F = 0.9104, max F = 0.9904
+  [Step 198000] Ep 3300: mean F = 0.9180, max F = 0.9878
+  [Step 204000] Ep 3400: mean F = 0.9099, max F = 0.9919
+  [Step 210000] Ep 3500: mean F = 0.9225, max F = 0.9898
+  [Step 216000] Ep 3600: mean F = 0.8956, max F = 0.9899
+  [Step 222000] Ep 3700: mean F = 0.9236, max F = 0.9877
+  [Step 228000] Ep 3800: mean F = 0.9171, max F = 0.9920
+  [Step 234000] Ep 3900: mean F = 0.9098, max F = 0.9894
+  [Step 240000] Ep 4000: mean F = 0.9221, max F = 0.9904
+  [Step 246000] Ep 4100: mean F = 0.9125, max F = 0.9889
+  >>> Checkpoint saved at step 250000
+  >>> Checkpoint saved at step 250001
+  >>> Checkpoint saved at step 250002
+  >>> Checkpoint saved at step 250003
+  >>> Checkpoint saved at step 250004
+  >>> Checkpoint saved at step 250005
+  >>> Checkpoint saved at step 250006
+  >>> Checkpoint saved at step 250007
+  >>> Checkpoint saved at step 250008
+  >>> Checkpoint saved at step 250009
+  >>> Checkpoint saved at step 250010
+  >>> Checkpoint saved at step 250011
+  >>> Checkpoint saved at step 250012
+  >>> Checkpoint saved at step 250013
+  >>> Checkpoint saved at step 250014
+  >>> Checkpoint saved at step 250015
+  >>> Checkpoint saved at step 250016
+  >>> Checkpoint saved at step 250017
+  >>> Checkpoint saved at step 250018
+  >>> Checkpoint saved at step 250019
+  >>> Checkpoint saved at step 250020
+  >>> Checkpoint saved at step 250021
+  >>> Checkpoint saved at step 250022
+  >>> Checkpoint saved at step 250023
+  >>> Checkpoint saved at step 250024
+  >>> Checkpoint saved at step 250025
+  >>> Checkpoint saved at step 250026
+  >>> Checkpoint saved at step 250027
+  >>> Checkpoint saved at step 250028
+  >>> Checkpoint saved at step 250029
+  >>> Checkpoint saved at step 250030
+  >>> Checkpoint saved at step 250031
+  >>> Checkpoint saved at step 250032
+  >>> Checkpoint saved at step 250033
+  >>> Checkpoint saved at step 250034
+  >>> Checkpoint saved at step 250035
+  >>> Checkpoint saved at step 250036
+  >>> Checkpoint saved at step 250037
+  >>> Checkpoint saved at step 250038
+  >>> Checkpoint saved at step 250039
+  >>> Checkpoint saved at step 250040
+  >>> Checkpoint saved at step 250041
+  >>> Checkpoint saved at step 250042
+  >>> Checkpoint saved at step 250043
+  >>> Checkpoint saved at step 250044
+  >>> Checkpoint saved at step 250045
+  >>> Checkpoint saved at step 250046
+  >>> Checkpoint saved at step 250047
+  >>> Checkpoint saved at step 250048
+  >>> Checkpoint saved at step 250049
+  >>> Checkpoint saved at step 250050
+  >>> Checkpoint saved at step 250051
+  >>> Checkpoint saved at step 250052
+  >>> Checkpoint saved at step 250053
+  >>> Checkpoint saved at step 250054
+  >>> Checkpoint saved at step 250055
+  >>> Checkpoint saved at step 250056
+  >>> Checkpoint saved at step 250057
+  >>> Checkpoint saved at step 250058
+  >>> Checkpoint saved at step 250059
+  >>> Checkpoint saved at step 250060
+  >>> Checkpoint saved at step 250061
+  >>> Checkpoint saved at step 250062
+  >>> Checkpoint saved at step 250063
