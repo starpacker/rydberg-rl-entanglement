@@ -80,8 +80,8 @@ class RydbergBellEnv(gymnasium.Env):
 
         if scenario not in SCENARIOS:
             raise ValueError(f"Unknown scenario '{scenario}'")
-        if obs_mode not in ("full", "time_only"):
-            raise ValueError(f"obs_mode must be 'full' or 'time_only', got '{obs_mode}'")
+        if obs_mode not in ("full", "time_only", "noise_conditioned"):
+            raise ValueError(f"obs_mode must be 'full', 'time_only', or 'noise_conditioned', got '{obs_mode}'")
         self.scenario = scenario
         self.cfg = SCENARIOS[scenario]
         if self.cfg["n_atoms"] != 2:
@@ -108,13 +108,18 @@ class RydbergBellEnv(gymnasium.Env):
         # Observation space depends on obs_mode:
         #   "full": rho flattened [real, imag] (32) + optional t/T (1) -> 32 or 33
         #   "time_only": just (t/T,) -> 1  (open-loop: policy is pi(a|t))
+        #   "noise_conditioned": (t/T, noise_params...) -> 7  (open-loop conditioned on noise)
         if self.obs_mode == "time_only":
             obs_dim = 1
+        elif self.obs_mode == "noise_conditioned":
+            # t/T (1) + 6 noise params = 7
+            obs_dim = 7
         else:
             obs_dim = 33 if self.obs_include_time else 32
         self.observation_space = spaces.Box(
-            low=-1.0 if self.obs_mode == "full" else 0.0,
-            high=1.0, shape=(obs_dim,), dtype=np.float32
+            low=-2.0 if self.obs_mode == "noise_conditioned" else (-1.0 if self.obs_mode == "full" else 0.0),
+            high=2.0 if self.obs_mode == "noise_conditioned" else 1.0,
+            shape=(obs_dim,), dtype=np.float32
         )
         # Action: normalised (Omega, Delta) in [-1, 1]
         self.action_space = spaces.Box(
@@ -270,9 +275,46 @@ class RydbergBellEnv(gymnasium.Env):
         """Build observation vector based on obs_mode."""
         if self.obs_mode == "time_only":
             return np.array([time_frac], dtype=np.float32)
+        elif self.obs_mode == "noise_conditioned":
+            # Open-loop but conditioned on noise parameters
+            # obs = [t/T, noise_params_normalized]
+            noise_vec = self._get_noise_vector_normalized()
+            return np.concatenate([[time_frac], noise_vec]).astype(np.float32)
         else:
             tf = time_frac if self.obs_include_time else None
             return self._rho_to_obs(self._rho_np, time_frac=tf)
+
+    def _get_noise_vector_normalized(self) -> np.ndarray:
+        """Return normalized noise parameters as 6-dim vector.
+
+        Components:
+            [0] delta_doppler[0] / 1e6  (MHz scale)
+            [1] delta_doppler[1] / 1e6
+            [2] delta_R[0] / 0.1  (10% position scale)
+            [3] delta_R[1] / 0.1
+            [4] ou_mean / 0.1  (10% amplitude scale)
+            [5] phase_noise / 0.1
+        """
+        delta_doppler = self._noise_params.get("delta_doppler", [0.0, 0.0])
+        delta_R = self._noise_params.get("delta_R", [0.0, 0.0])
+
+        # OU mean from the pre-generated series
+        if self._ou_series is not None:
+            ou_mean = float(self._ou_series.mean())
+        else:
+            ou_mean = 0.0
+
+        # Phase noise
+        phase_noise = self._noise_params.get("phase_noise", 0.0)
+
+        return np.array([
+            delta_doppler[0] / 1e6,
+            delta_doppler[1] / 1e6,
+            delta_R[0] / 0.1,
+            delta_R[1] / 0.1,
+            ou_mean / 0.1,
+            phase_noise / 0.1,
+        ], dtype=np.float32)
 
     def _build_hamiltonian_np(self, Omega: float, Delta: float) -> np.ndarray:
         """Build Hamiltonian with per-atom Doppler shifts (aligned with lindblad.py)."""

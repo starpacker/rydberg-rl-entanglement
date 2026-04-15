@@ -1,0 +1,92 @@
+
+============================================================
+CMA-ES+DR: optimize at each noise level
+============================================================
+
+--- CMA-ES at noise_scale=0.5 ---
+(7_w,15)-aCMA-ES (mu_w=4.5,w_1=34%) in dimension 20 (seed=42, Sun Apr 12 06:37:59 2026)
+  Gen   0: best_F=0.8127, mean_F=0.5187
+  Gen  50: best_F=0.9372, mean_F=0.6315
+  Gen 100: best_F=0.9647, mean_F=0.8114
+  Gen 150: best_F=0.9917, mean_F=0.9814
+  CMA-ES done: best_fitness=0.9944 (1400s)
+  noise_scale=0.5: test F = 0.9926 ± 0.0033  (1406s)
+
+--- CMA-ES at noise_scale=1.0 ---
+(7_w,15)-aCMA-ES (mu_w=4.5,w_1=34%) in dimension 20 (seed=42, Sun Apr 12 07:01:26 2026)
+  Gen   0: best_F=0.7791, mean_F=0.5148
+  Gen  50: best_F=0.9607, mean_F=0.7834
+  Gen 100: best_F=0.9652, mean_F=0.7786
+  Gen 150: best_F=0.9814, mean_F=0.9639
+  CMA-ES done: best_fitness=0.9940 (1451s)
+  noise_scale=1.0: test F = 0.9936 ± 0.0023  (1455s)
+
+--- CMA-ES at noise_scale=1.5 ---
+(7_w,15)-aCMA-ES (mu_w=4.5,w_1=34%) in dimension 20 (seed=42, Sun Apr 12 07:25:42 2026)
+  Gen   0: best_F=0.7595, mean_F=0.5092
+  Gen  50: best_F=0.8644, mean_F=0.5054
+  Gen 100: best_F=0.9012, mean_F=0.4188
+  Gen 150: best_F=0.9214, mean_F=0.8403
+  CMA-ES done: best_fitness=0.9819 (1461s)
+  noise_scale=1.5: test F = 0.9782 ± 0.0152  (1465s)
+
+--- CMA-ES at noise_scale=2.0 ---
+(7_w,15)-aCMA-ES (mu_w=4.5,w_1=34%) in dimension 20 (seed=42, Sun Apr 12 07:50:10 2026)
+  Gen   0: best_F=0.7381, mean_F=0.5031
+  Gen  50: best_F=0.9298, mean_F=0.6112
+  Gen 100: best_F=0.9554, mean_F=0.8420
+  Gen 150: best_F=0.9823, mean_F=0.9705
+  CMA-ES done: best_fitness=0.9835 (1324s)
+  noise_scale=2.0: test F = 0.9769 ± 0.0174  (1329s)
+
+--- CMA-ES at noise_scale=2.5 ---
+(7_w,15)-aCMA-ES (mu_w=4.5,w_1=34%) in dimension 20 (seed=42, Sun Apr 12 08:12:18 2026)
+  Gen   0: best_F=0.7174, mean_F=0.4971
+  Gen  50: best_F=0.8819, mean_F=0.6816
+  Gen 100: best_F=0.9483, mean_F=0.9209
+  Gen 150: best_F=0.9743, mean_F=0.9661
+  CMA-ES done: best_fitness=0.9916 (1403s)
+  noise_scale=2.5: test F = 0.9880 ± 0.0100  (1408s)
+
+--- CMA-ES at noise_scale=3.0 ---
+(7_w,15)-aCMA-ES (mu_w=4.5,w_1=34%) in dimension 20 (seed=42, Sun Apr 12 08:35:48 2026)
+  Gen   0: best_F=0.7181, mean_F=0.4919
+  Gen  50: best_F=0.8508, mean_F=0.6041
+  Gen 100: best_F=0.9216, mean_F=0.8724
+  Gen 150: best_F=0.9508, mean_F=0.9459
+  CMA-ES done: best_fitness=0.9681 (1310s)
+  noise_scale=3.0: test F = 0.9583 ± 0.0304  (1315s)
+
+--- CMA-ES at noise_scale=4.0 ---
+(7_w,15)-aCMA-ES (mu_w=4.5,w_1=34%) in dimension 20 (seed=42, Sun Apr 12 08:57:44 2026)
+  Gen   0: best_F=0.6974, mean_F=0.4806
+  Gen  50: best_F=0.8069, mean_F=0.3547
+  Gen 100: best_F=0.8856, mean_F=0.7872
+  Gen 150: best_F=0.9465, mean_F=0.9371
+  CMA-ES done: best_fitness=0.9623 (1335s)
+  noise_scale=4.0: test F = 0.9299 ± 0.0653  (1340s)
+
+--- CMA-ES at noise_scale=5.0 ---
+(7_w,15)-aCMA-ES (mu_w=4.5,w_1=34%) in dimension 20 (seed=42, Sun Apr 12 09:20:08 2026)
+  Gen   0: best_F=0.6236, mean_F=0.4608
+  Gen  50: best_F=0.6272, mean_F=0.4531
+  Gen 100: best_F=0.8105, mean_F=0.7632
+  Gen 150: best_F=0.9269, mean_F=0.9205
+  CMA-ES done: best_fitness=0.9529 (1269s)
+  noise_scale=5.0: test F = 0.9099 ± 0.1440  (1274s)
+
+======================================================================
+                 NOISE-SCALING PHASE DIAGRAM RESULTS                  
+======================================================================
+noise_scale |      GRAPE |  CMA-ES+DR |    PPO(CL)
+------------+------------+------------+-----------
+        0.5 |        --- |     0.9926 |        ---
+        1.0 |        --- |     0.9936 |        ---
+        1.5 |        --- |     0.9782 |        ---
+        2.0 |        --- |     0.9769 |        ---
+        2.5 |        --- |     0.9880 |        ---
+        3.0 |        --- |     0.9583 |        ---
+        4.0 |        --- |     0.9299 |        ---
+        5.0 |        --- |     0.9099 |        ---
+
+Results saved to /share/liuyutian/rydberg-rl-entanglement/results/noise_scaling/

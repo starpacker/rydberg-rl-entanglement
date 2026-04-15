@@ -1,0 +1,25 @@
+Using device: cuda
+Loaded CMA-ES params: shape=(20,)
+
+======================================================================
+PHASE C: End-to-End Estimator
+======================================================================
+
+============================================================
+Phase C: Training End-to-End Estimator
+============================================================
+  Batch 500/5000: mean_F = 0.9093, est_err = 2.96e+11
+  Batch 1000/5000: mean_F = 0.9672, est_err = 2.95e+11
+  Batch 1500/5000: mean_F = 0.9740, est_err = 2.98e+11
+  Batch 2000/5000: mean_F = 0.9780, est_err = 2.92e+11
+  Batch 2500/5000: mean_F = 0.9793, est_err = 3.09e+11
+  Batch 3000/5000: mean_F = 0.9821, est_err = 2.65e+11
+  Batch 3500/5000: mean_F = 0.9827, est_err = 2.86e+11
+  Batch 4000/5000: mean_F = 0.9820, est_err = 3.20e+11
+  Batch 4500/5000: mean_F = 0.9829, est_err = 3.02e+11
+  Batch 5000/5000: mean_F = 0.9825, est_err = 3.21e+11
+
+  Training complete in 978.1s
+  Final mean_F = 0.9821
+
+Done!

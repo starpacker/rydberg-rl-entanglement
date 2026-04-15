@@ -4,3 +4,72 @@ To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX51
 2026-04-12 06:38:28.597649: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
 /home/liuyutian/server/miniconda3/lib/python3.9/site-packages/stable_baselines3/common/on_policy_algorithm.py:150: UserWarning: You are trying to run PPO on the GPU, but it is primarily intended to run on the CPU when not using a CNN policy (you are using ActorCriticPolicy which should be a MlpPolicy). See https://github.com/DLR-RM/stable-baselines3/issues/1245 for more info. You can pass `device='cpu'` or `export CUDA_VISIBLE_DEVICES=` to force using the CPU.Note: The model will train, but the GPU utilization will be poor and the training might take longer than on CPU.
   warnings.warn(
+/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/scipy/linalg/_matfuncs.py:358: RuntimeWarning: overflow encountered in matmul
+  eAw = eAw @ eAw
+/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/scipy/linalg/_matfuncs.py:358: RuntimeWarning: invalid value encountered in matmul
+  eAw = eAw @ eAw
+/share/liuyutian/rydberg-rl-entanglement/src/environments/rydberg_env.py:314: RuntimeWarning: invalid value encountered in divide
+  rho_new /= np.trace(rho_new).real
+
+============================================================
+Closed-loop PPO: train at each noise level
+============================================================
+
+--- PPO training at noise_scale=0.5 ---
+  Training done: 1647s, final mean F = 0.9861
+  noise_scale=0.5: test F = 0.9849 ± 0.0039  (1659s)
+
+--- PPO training at noise_scale=1.0 ---
+  Training done: 1659s, final mean F = 0.9889
+  noise_scale=1.0: test F = 0.9848 ± 0.0036  (1675s)
+
+--- PPO training at noise_scale=1.5 ---
+  Training done: 1703s, final mean F = 0.9835
+  noise_scale=1.5: test F = 0.9804 ± 0.0064  (1715s)
+
+--- PPO training at noise_scale=2.0 ---
+  Training done: 1637s, final mean F = 0.9725
+  noise_scale=2.0: test F = 0.9676 ± 0.0205  (1649s)
+
+--- PPO training at noise_scale=2.5 ---
+  Training done: 1609s, final mean F = 0.9722
+  noise_scale=2.5: test F = 0.9776 ± 0.0125  (1621s)
+
+--- PPO training at noise_scale=3.0 ---
+  Training done: 1631s, final mean F = 0.9708
+  noise_scale=3.0: test F = 0.9751 ± 0.0135  (1643s)
+
+--- PPO training at noise_scale=4.0 ---
+  Training done: 1762s, final mean F = 0.9590
+  noise_scale=4.0: test F = 0.9709 ± 0.0223  (1774s)
+
+--- PPO training at noise_scale=5.0 ---
+Traceback (most recent call last):
+  File "/share/liuyutian/rydberg-rl-entanglement/experiments/noise_scaling_sweep.py", line 420, in <module>
+    main()
+  File "/share/liuyutian/rydberg-rl-entanglement/experiments/noise_scaling_sweep.py", line 384, in main
+    ppo_results = run_ppo_sweep(args.noise_levels, args.n_test)
+  File "/share/liuyutian/rydberg-rl-entanglement/experiments/noise_scaling_sweep.py", line 297, in run_ppo_sweep
+    model.learn(total_timesteps=PPO_TOTAL_STEPS, callback=cb)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/stable_baselines3/ppo/ppo.py", line 311, in learn
+    return super().learn(
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 202, in collect_rollouts
+    actions, values, log_probs = self.policy(obs_tensor)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/stable_baselines3/common/policies.py", line 654, in forward
+    distribution = self._get_action_dist_from_latent(latent_pi)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/stable_baselines3/common/policies.py", line 694, in _get_action_dist_from_latent
+    return self.action_dist.proba_distribution(mean_actions, self.log_std)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/stable_baselines3/common/distributions.py", line 164, in proba_distribution
+    self.distribution = Normal(mean_actions, action_std)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/torch/distributions/normal.py", line 66, in __init__
+    super().__init__(batch_shape, validate_args=validate_args)
+  File "/home/liuyutian/server/miniconda3/lib/python3.9/site-packages/torch/distributions/distribution.py", line 77, in __init__
+    raise ValueError(
+ValueError: Expected parameter loc (Tensor of shape (1, 2)) of distribution Normal(loc: torch.Size([1, 2]), scale: torch.Size([1, 2])) to satisfy the constraint Real(), but found invalid values:
+tensor([[nan, nan]], device='cuda:0')

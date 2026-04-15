@@ -1,0 +1,9 @@
+Using device: cuda
+Traceback (most recent call last):
+  File "/share/liuyutian/rydberg-rl-entanglement/train_ppo_bc_from_dnaac.py", line 365, in <module>
+    main()
+  File "/share/liuyutian/rydberg-rl-entanglement/train_ppo_bc_from_dnaac.py", line 322, in main
+    cmaes_params = load_cmaes_params(device)
+  File "/share/liuyutian/rydberg-rl-entanglement/train_ppo_bc_from_dnaac.py", line 54, in load_cmaes_params
+    for entry in data["cmaes"]["noise_levels"]:
+KeyError: 'cmaes'

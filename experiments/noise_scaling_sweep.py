@@ -83,10 +83,10 @@ def run_grape_sweep(noise_levels: List[float], n_test: int = N_TEST) -> Dict:
 
         # Create noise model with overridden scale
         nm = NoiseModel(SCENARIO, noise_scale=ns)
-        rng = np.random.default_rng(42)
 
         fids = []
         for i in range(n_test):
+            rng = np.random.default_rng(50000 + i)  # match other methods' eval seeds
             noise = nm.sample(rng)
             try:
                 fid = run_grape_eval(SCENARIO, omega_grape, delta_grape, noise)

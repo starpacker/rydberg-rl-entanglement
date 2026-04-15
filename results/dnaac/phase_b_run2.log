@@ -1,0 +1,25 @@
+Using device: cuda
+Loaded CMA-ES params: shape=(20,)
+
+======================================================================
+PHASE B: Noise-Conditioned Generator
+======================================================================
+
+============================================================
+Phase B: Training Noise-Conditioned Generator
+============================================================
+  Batch 500/5000: mean_F = 0.9835
+  Batch 1000/5000: mean_F = 0.9874
+  Batch 1500/5000: mean_F = 0.9876
+  Batch 2000/5000: mean_F = 0.9884
+  Batch 2500/5000: mean_F = 0.9881
+  Batch 3000/5000: mean_F = 0.9907
+  Batch 3500/5000: mean_F = 0.9943
+  Batch 4000/5000: mean_F = 0.9950
+  Batch 4500/5000: mean_F = 0.9956
+  Batch 5000/5000: mean_F = 0.9959
+
+  Training complete in 1005.9s
+  Final mean_F = 0.9957
+
+Done!

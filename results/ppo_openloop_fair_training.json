@@ -1,0 +1,25 @@
+{
+  "total_timesteps": 1000000,
+  "n_seeds": 3,
+  "use_curriculum": true,
+  "seeds": [
+    {
+      "seed": 42,
+      "wall_time": 15945.894786270335,
+      "n_episodes": 1000448,
+      "final_mean_fidelity": 0.9803501942114256
+    },
+    {
+      "seed": 153,
+      "wall_time": 10729.66946401447,
+      "n_episodes": 1000448,
+      "final_mean_fidelity": 0.9596848662125944
+    },
+    {
+      "seed": 264,
+      "wall_time": 13395.913646550849,
+      "n_episodes": 1000448,
+      "final_mean_fidelity": 0.9810330201155113
+    }
+  ]
+}
