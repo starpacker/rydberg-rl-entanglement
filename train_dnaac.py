@@ -10,6 +10,7 @@ Key insight: exact gradients through differentiable Lindblad dynamics enable
 direct optimization, avoiding the noise of REINFORCE policy gradients.
 """
 
+import copy
 import json
 import sys
 import time
@@ -326,7 +327,7 @@ def phase_b_train(
 
     # Normalization: use typical scales for noise at alpha=3 (mid-range)
     # These should match the typical magnitude of noise_to_vector output
-    noise_normalizer = torch.tensor(DNAAC_NOISE_NORMALIZER, device=device)
+    noise_normalizer = torch.tensor(DNAAC_NOISE_NORMALIZER, dtype=torch.float32, device=device)
 
     for batch in range(n_batches):
         # Sample noise uniformly from range
@@ -336,10 +337,10 @@ def phase_b_train(
         noise = sample_noise_batch(batch_size, noise_scale=alpha, device=device, rng=rng)
 
         # Get noise vector for network input
-        noise_vec = noise_to_vector(noise)
+        noise_vec = noise_to_vector(noise).float()
 
         # Normalize noise for network input
-        noise_vec_norm = (noise_vec / noise_normalizer).float()
+        noise_vec_norm = noise_vec / noise_normalizer
 
         # Get correction
         correction = corrector(noise_vec_norm)
@@ -451,8 +452,7 @@ def phase_c_train(
     calib_delta = torch.zeros(k_calib, device=device)
     calib_actions = torch.stack([calib_omega, calib_delta], dim=-1).unsqueeze(0)  # (1, k_calib, 2)
 
-    # Normalization: use typical scales for noise at alpha=3
-    noise_normalizer = torch.tensor(DNAAC_NOISE_NORMALIZER, device=device)
+    noise_normalizer = torch.tensor(DNAAC_NOISE_NORMALIZER, dtype=torch.float32, device=device)
 
     history = {"loss": [], "mean_F": [], "estimation_error": []}
     t0 = time.perf_counter()
@@ -586,8 +586,7 @@ def phase_d_evaluate(
     decoder = FourierPulseDecoder(n_steps=60, n_fourier=5, device=device)
     base_params = torch.tensor(cmaes_params, dtype=torch.float32, device=device)
 
-    # Normalization: use typical scales for noise at alpha=3
-    noise_normalizer = torch.tensor(DNAAC_NOISE_NORMALIZER, device=device)
+    noise_normalizer = torch.tensor(DNAAC_NOISE_NORMALIZER, dtype=torch.float32, device=device)
 
     results = {}
 
@@ -826,6 +825,9 @@ def main():
             corrector = NoiseConditionedCorrector().to(device)
             corrector.load_state_dict(torch.load(model_dir / "corrector.pt"))
 
+        # Save Phase B corrector before Phase C mutates it
+        corrector_phase_b = copy.deepcopy(corrector)
+
         estimator, history_c = phase_c_train(
             corrector=corrector,
             cmaes_params=cmaes_params,
@@ -850,23 +852,30 @@ def main():
         print("PHASE D: Evaluation")
         print("=" * 70)
 
-        # Load original corrector (Phase B) — always needed
-        if corrector is None:
-            corrector = NoiseConditionedCorrector().to(device)
-            corrector.load_state_dict(torch.load(model_dir / "corrector.pt"))
+        # When running all phases, corrector_phase_b has the original Phase B weights
+        # and corrector has been finetuned by Phase C.
+        # When running Phase D standalone, load from disk.
+        if 'corrector_phase_b' in dir():
+            # Running after Phase B+C in same session
+            phase_b_corrector = corrector_phase_b
+            corrector_finetuned = corrector
+        else:
+            # Load original corrector (Phase B) — always needed
+            phase_b_corrector = NoiseConditionedCorrector().to(device)
+            phase_b_corrector.load_state_dict(torch.load(model_dir / "corrector.pt"))
 
-        # Load finetuned corrector (Phase C) — for Phase C eval
-        corrector_finetuned = None
-        if (model_dir / "corrector_finetuned.pt").exists():
-            corrector_finetuned = NoiseConditionedCorrector().to(device)
-            corrector_finetuned.load_state_dict(torch.load(model_dir / "corrector_finetuned.pt"))
+            # Load finetuned corrector (Phase C) — for Phase C eval
+            corrector_finetuned = None
+            if (model_dir / "corrector_finetuned.pt").exists():
+                corrector_finetuned = NoiseConditionedCorrector().to(device)
+                corrector_finetuned.load_state_dict(torch.load(model_dir / "corrector_finetuned.pt"))
 
         if estimator is None and (model_dir / "estimator.pt").exists():
             estimator = NoiseEstimatorDiff(k_calib=args.k_calib).to(device)
             estimator.load_state_dict(torch.load(model_dir / "estimator.pt"))
 
         eval_results = phase_d_evaluate(
-            corrector=corrector,
+            corrector=phase_b_corrector,
             corrector_finetuned=corrector_finetuned,
             estimator=estimator,
             cmaes_params=cmaes_params,

@@ -14,6 +14,7 @@ Steps:
 4. Re-evaluate GRAPE with unified seeds
 5. Compile final results
 """
+import copy
 import sys, json, time
 from pathlib import Path
 import numpy as np
@@ -63,6 +64,9 @@ corrector, b_history = phase_b_train(
     cmaes_params, n_batches=10000, batch_size=64, device=device
 )
 
+# Save Phase B corrector BEFORE Phase C mutates it
+corrector_phase_b = copy.deepcopy(corrector)
+
 # Phase C
 print("\n--- Phase C ---")
 estimator, c_history = phase_c_train(
@@ -70,17 +74,18 @@ estimator, c_history = phase_c_train(
     n_batches=5000, batch_size=32, device=device
 )
 
-# Save models
+# Save models — corrector is now finetuned by Phase C
 models_dir = ROOT / "models" / "dnaac"
 models_dir.mkdir(parents=True, exist_ok=True)
-torch.save(corrector.state_dict(), models_dir / "corrector.pt")
+torch.save(corrector_phase_b.state_dict(), models_dir / "corrector.pt")
+torch.save(corrector.state_dict(), models_dir / "corrector_finetuned.pt")
 torch.save(estimator.state_dict(), models_dir / "estimator.pt")
 print(f"Models saved to {models_dir}")
 
 # Phase D: Evaluate in numpy env
 print("\n--- Phase D ---")
 results_d = phase_d_evaluate(
-    corrector=corrector,
+    corrector=corrector_phase_b,
     corrector_finetuned=corrector,
     estimator=estimator,
     cmaes_params=cmaes_params,
