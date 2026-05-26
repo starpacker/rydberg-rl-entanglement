@@ -102,7 +102,7 @@
 
 \subsection{传统方法：半经验质量公式}
 
-半经验质量公式（Semi-Empirical Mass Formula, SEMF）由Weizsäcker于1935年提出，
+半经验质量公式（Semi-Empirical Mass Formula, SEMF）由Weizsäcker于1935年提出\cite{weizsacker1935}，
 基于液滴模型将结合能分解为五项贡献：
 
 \begin{equation}
@@ -155,7 +155,7 @@ SEMF在中重核区域表现良好（典型误差2--3~MeV），但在轻核区�
 
 \subsection{AME2020数据集}
 
-我们使用AME2020（Atomic Mass Evaluation 2020）数据库中的实验结合能数据。
+我们使用AME2020（Atomic Mass Evaluation 2020）\cite{wang2021ame}数据库中的实验结合能数据。
 数据集构建流程如下：
 
 \begin{enumerate}
@@ -604,12 +604,12 @@ SO(3)等变网络输出的是球谐函数展开系数，
     \toprule
     \textbf{方法} & \textbf{数据集} & \textbf{RMSE (MeV)} & \textbf{模型类型} & \textbf{参考文献} \\
     \midrule
-    SEMF & 全核图 & $\sim$2.5 & 解析公式 & Weizsäcker 1935 \\
-    FRDM & 全核图 & 0.58 & 宏观-微观 & Möller+ 2016 \\
-    WS4 & 全核图 & 0.35 & 宏观-微观 & Wang+ 2014 \\
+    SEMF & 全核图 & $\sim$2.5 & 解析公式 & \cite{weizsacker1935} \\
+    FRDM & 全核图 & 0.58 & 宏观-微观 & \cite{moller2016frdm} \\
+    WS4 & 全核图 & 0.35 & 宏观-微观 & \cite{wang2014ws4} \\
     \midrule
-    BNN & 2353核 & 0.20 & 贝叶斯神经网络 & Niu+ 2018 \\
-    KRNM & 2457核 & 0.14 & 核回归 & Utama+ 2016 \\
+    BNN & 2353核 & 0.20 & 贝叶斯神经网络 & \cite{niu2018bnn} \\
+    KRNM & 2457核 & 0.14 & 核回归 & \cite{utama2016krnm} \\
     \midrule
     \textbf{本工作（轻核）} & \textbf{243核} & \textbf{3.14} & \textbf{SEMF+NN} & --- \\
     \bottomrule
@@ -710,7 +710,7 @@ SO(3)等变网络输出的是球谐函数展开系数，
 % 参考文献
 % ================================================================
 \bibliographystyle{unsrtnat}
-\bibliography{refs}
+\bibliography{refs_ame2020}
 
 % ================================================================
 % 附录
@@ -772,9 +772,102 @@ SO(3)等变网络输出的是球谐函数展开系数，
 
 完整的实验代码和数据集已开源：
 \begin{itemize}
-  \item 代码仓库: \texttt{github.com/username/nuclear-ml}
+  \item 代码仓库: \texttt{github.com/starpacker/rydberg-rl-entanglement}
   \item 数据集: AME2020官方网站 \texttt{https://www-nds.iaea.org/amdc/}
   \item 预训练模型: 随代码仓库提供
 \end{itemize}
+
+\subsection{半经验质量公式（SEMF）推导}
+
+半经验质量公式（Semi-Empirical Mass Formula, SEMF）也称为Bethe-Weizsäcker公式，
+基于液滴模型将核结合能分解为五项贡献。
+
+\subsubsection{体积能项}
+
+假设核物质是均匀的，每个核子与周围核子的相互作用贡献相同的结合能。
+由于核力的饱和性（每个核子只与有限个近邻相互作用），结合能正比于核子数：
+
+\begin{equation}
+  E_{\text{volume}} = a_v A
+\end{equation}
+
+其中$a_v \approx 15.75$ MeV是体积能系数。
+
+\subsubsection{表面能项}
+
+表面的核子缺少一侧的近邻，结合能减少。表面积正比于$A^{2/3}$，因此：
+
+\begin{equation}
+  E_{\text{surface}} = -a_s A^{2/3}
+\end{equation}
+
+其中$a_s \approx 17.8$ MeV。负号表示这是对结合能的修正（减少）。
+
+\subsubsection{库仑能项}
+
+质子间的静电排斥降低结合能。将原子核视为均匀带电球体，半径$R = r_0 A^{1/3}$，
+库仑能为：
+
+\begin{equation}
+  E_{\text{Coulomb}} = -\frac{3}{5} \frac{e^2}{4\pi\epsilon_0} \frac{Z^2}{R}
+  = -a_c \frac{Z^2}{A^{1/3}}
+\end{equation}
+
+其中$a_c \approx 0.711$ MeV。
+
+\subsubsection{对称能项}
+
+由于泡利不相容原理，中子和质子分别占据各自的能级。当$N \neq Z$时，
+多余的核子必须占据更高的能级，降低结合能。基于费米气体模型，对称能为：
+
+\begin{equation}
+  E_{\text{asymmetry}} = -a_a \frac{(N-Z)^2}{A}
+\end{equation}
+
+其中$a_a \approx 23.7$ MeV。这一项惩罚中子-质子不对称。
+
+\subsubsection{配对能项}
+
+实验观察到偶偶核（偶$Z$偶$N$）比奇奇核更稳定。这是由于核子配对效应：
+
+\begin{equation}
+  \delta(Z, N) = \begin{cases}
+    +a_p A^{-1/2} & \text{偶}Z\text{偶}N \\
+    0 & \text{奇}A \\
+    -a_p A^{-1/2} & \text{奇}Z\text{奇}N
+  \end{cases}
+\end{equation}
+
+其中$a_p \approx 11.18$ MeV。$A^{-1/2}$的依赖关系来自配对能与核表面积的关系。
+
+\subsubsection{完整公式}
+
+综合以上五项，得到SEMF完整形式：
+
+\begin{equation}
+  B(Z, N) = a_v A - a_s A^{2/3} - a_c \frac{Z^2}{A^{1/3}}
+            - a_a \frac{(N-Z)^2}{A} + \delta(Z, N)
+\end{equation}
+
+\textbf{物理意义总结：}
+\begin{itemize}
+  \item 体积能：核力的吸引作用，主导项
+  \item 表面能：表面核子结合不足的修正
+  \item 库仑能：质子间静电排斥
+  \item 对称能：中子-质子不对称的惩罚
+  \item 配对能：量子配对效应
+\end{itemize}
+
+\textbf{局限性：}
+SEMF在中重核区域（$A > 60$）表现良好，但在轻核区域存在显著偏差，
+主要原因是：
+\begin{enumerate}
+  \item 壳效应（magic numbers: 2, 8, 20, 28, 50, 82, 126）未被考虑
+  \item 形变效应在某些核区更显著
+  \item 液滴模型假设在小系统中失效
+  \item 配对能的简单形式无法捕捉复杂的核结构
+\end{enumerate}
+
+这些系统偏差正是本研究中神经网络残差修正的目标。
 
 \end{document}
